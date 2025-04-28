@@ -2,29 +2,70 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>叶泽伟的作品集</title>
     <style>
-        /* 默认样式（亮色模式） */
         body {
-            background-color: #FFFCEB; /* 浅黄色背景，减少蓝光 */
-            color: #333333; /* 深灰色文字，降低对比度 */
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Times New Roman', Times, serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            text-align: center;
+            line-height: 1.5;
+            background-color: #FFFFFF;
+            color: #000000;
         }
 
-        h1, h2 {
-            color: #000000; /* 黑色标题，增加层次感 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        a {
-            color: #0066CC; /* 中等蓝色链接，促进专注 */
+        .lang-switcher {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            color: #000000;
+            font-size: 14px;
+            margin: 0 5px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .lang-switcher button:hover {
             text-decoration: none;
         }
 
-        a:hover {
-            text-decoration: underline;
+        h1 {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center; /* Keep title centered */
+        }
+
+        .underline {
+            border-bottom: 2px solid #000;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .content-block {
+            width: 80%; /* Match the underline width */
+            margin: 0 auto; /* Center the block */
+            text-align: left; /* Align content inside to the left */
+        }
+
+        h2 {
+            font-size: clamp(20px, 3.5vw, 24px);
+            font-weight: bold;
+            margin: 30px 0 10px 0;
         }
 
         ul {
@@ -33,44 +74,206 @@
         }
 
         li {
+            font-size: clamp(14px, 2vw, 16px);
             margin-bottom: 10px;
         }
 
-        /* 深色模式样式 */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212; /* 深灰色背景 */
-                color: #E0E0E0; /* 浅灰色文字 */
+        a {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
             }
 
-            h1, h2 {
-                color: #FFFFFF; /* 白色标题 */
+            .underline {
+                width: 90%;
+                margin: 15px auto;
+            }
+
+            .content-block {
+                width: 90%; /* Match the underline width */
+            }
+
+            h1 {
+                margin: 15px 0;
+            }
+
+            h2 {
+                margin: 20px 0 8px 0;
+            }
+
+            li {
+                margin-bottom: 8px;
+            }
+
+            .lang-switcher {
+                top: 5px;
+                right: 10px;
+            }
+
+            .lang-switcher button {
+                font-size: 12px;
+                margin: 0 3px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 15px 10px;
+            }
+
+            .underline {
+                width: 95%;
+            }
+
+            .content-block {
+                width: 95%; /* Match the underline width */
+            }
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1A1A1A;
+                color: #E0E0E0;
+            }
+
+            .underline {
+                border-bottom: 2px solid #E0E0E0;
+            }
+
+            .lang-switcher button {
+                color: #E0E0E0;
+            }
+
+            .lang-switcher button:hover {
+                color: #CCCCCC;
             }
 
             a {
-                color: #66B3FF; /* 浅蓝色链接 */
+                color: #E0E0E0;
             }
 
             a:hover {
-                color: #99CCFF; /* 更亮的蓝色 */
+                color: #CCCCCC;
             }
         }
     </style>
 </head>
 <body>
-    <h1>叶泽伟的作品集</h1>
-    <h2>项目</h2>
-    <ul>
-        <li><a href="https://github.com/yuuniji/yuuniji.github.io" target="_blank">项目1</a> - 个人博客网站</li>
-        <li><a href="https://github.com/yuuniji/focus-flow" target="_blank">项目2</a> - 番茄钟</li>
-        <li><a href="https://github.com/yuuniji/word-to-markmap" target="_blank">项目3</a> - 单词导图</li>
-    </ul>
-    <h2>博客</h2>
-    <ul>
-        <li><a href="https://yuuniji.github.io/" target="_blank">博客主页</a> - 所有文章</li>
-        <li><a href="https://yuuniji.github.io/posts/my-first-post/" target="_blank">文章1</a> - 我的博客搭建</li>
-        <li><a href="https://yuuniji.github.io/posts/roadmap-devops/" target="_blank">文章2</a> - DevOps 路线图</li>
-        <li><a href="https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/" target="_blank">文章3</a> - 《如何学好日语》系列</li>
-    </ul>
+    <div class="lang-switcher">
+        <button onclick="changeLanguage('zh')">中文</button>
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('ja')">日本語</button>
+    </div>
+
+    <div class="container">
+        <div class="underline"></div>
+        <h1 id="title">叶泽伟的作品集</h1>
+        <div class="underline"></div>
+
+        <div class="content-block">
+            <h2 id="projects-heading">项目</h2>
+            <ul id="projects-list">
+                <li><a href="https://github.com/yuuniji" target="_blank">项目主页</a></li>
+                <li><a href="https://github.com/yuuniji/yuuniji.github.io" target="_blank">项目1</a> - 个人博客网站</li>
+                <li><a href="https://github.com/yuuniji/focus-flow" target="_blank">项目2</a> - 番茄钟</li>
+                <li><a href="https://github.com/yuuniji/word-to-markmap" target="_blank">项目3</a> - 单词导图</li>
+            </ul>
+
+            <h2 id="blog-heading">博客</h2>
+            <ul id="blog-list">
+                <li><a href="https://yuuniji.github.io/" target="_blank">博客主页</a></li>
+                <li><a href="https://yuuniji.github.io/posts/my-first-post/" target="_blank">文章1</a> - 我的博客搭建</li>
+                <li><a href="https://yuuniji.github.io/posts/roadmap-devops/" target="_blank">文章2</a> - DevOps 路线图</li>
+                <li><a href="https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/" target="_blank">文章3</a> - 《如何学好日语》系列</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            zh: {
+                title: "叶泽伟的作品集",
+                projectsHeading: "项目",
+                projects: [
+                    "项目主页",
+                    "项目1 - 个人博客网站",
+                    "项目2 - 番茄钟",
+                    "项目3 - 单词导图"
+                ],
+                blogHeading: "博客",
+                blog: [
+                    "博客主页",
+                    "文章1 - 我的博客搭建",
+                    "文章2 - DevOps 路线图",
+                    "文章3 - 《如何学好日语》系列"
+                ]
+            },
+            en: {
+                title: "Ye Zewei's Portfolio",
+                projectsHeading: "Projects",
+                projects: [
+                    "Projects Homepage",
+                    "Project 1 - Personal Blog Website",
+                    "Project 2 - Pomodoro Timer",
+                    "Project 3 - Word Mind Map"
+                ],
+                blogHeading: "Blog",
+                blog: [
+                    "Blog Homepage",
+                    "Post 1 - My Blog Setup",
+                    "Post 2 - DevOps Roadmap",
+                    "Post 3 - 'How to Learn Japanese Effectively' Series"
+                ]
+            },
+            ja: {
+                title: "葉澤偉のポートフォリオ",
+                projectsHeading: "プロジェクト",
+                projects: [
+                    "プロジェクトホームページ",
+                    "プロジェクト1 - 個人ブログサイト",
+                    "プロジェクト2 - ポモドーロタイマー",
+                    "プロジェクト3 - ワードマインドマップ"
+                ],
+                blogHeading: "ブログ",
+                blog: [
+                    "ブログホームページ",
+                    "記事1 - 私のブログ構築",
+                    "記事2 - DevOps ロードマップ",
+                    "記事3 - 『日本語を効果的に学ぶ方法』シリーズ"
+                ]
+            }
+        };
+
+        function changeLanguage(lang) {
+            const content = translations[lang];
+            document.getElementById('title').textContent = content.title;
+            document.getElementById('projects-heading').textContent = content.projectsHeading;
+            document.getElementById('blog-heading').textContent = content.blogHeading;
+
+            const projectsList = document.getElementById('projects-list');
+            projectsList.innerHTML = content.projects.map((item, index) => 
+                `<li><a href="${projectsList.children[index].querySelector('a').href}" target="_blank">${item}</a></li>`
+            ).join('');
+
+            const blogList = document.getElementById('blog-list');
+            blogList.innerHTML = content.blog.map((item, index) => 
+                `<li><a href="${blogList.children[index].querySelector('a').href}" target="_blank">${item}</a></li>`
+            ).join('');
+
+            // Update the page title
+            document.title = content.title;
+        }
+    </script>
 </body>
 </html>
