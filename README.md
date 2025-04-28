@@ -1,5 +1,19 @@
 # about
 
+## 当前代码的可维护性
+
+1. **添加项目或文章**：只需在 `data.projects` 或 `data.blog` 中添加一个新对象。例如，添加一个新项目：
+   ```javascript
+   { url: "https://github.com/yuuniji/new-project", label: { zh: "项目4 - 新项目", en: "Project 4 - New Project", ja: "プロジェクト4 - 新プロジェクト" } }
+   ```
+2. **修改现有条目**：直接编辑 `data` 中的对应对象。例如，修改“项目1”的标题：
+   ```javascript
+   { url: "https://github.com/yuuniji/yuuniji.github.io", label: { zh: "项目1 - 我的新博客", en: "Project 1 - My New Blog", ja: "プロジェクト1 - 私の新しいブログ" } }
+   ```
+3. **删除条目**：从 `data.projects` 或 `data.blog` 中移除对应对象即可。
+
+
+## 脚本
 
  GitHub 用户名是 `yuuniji`，并且希望使用这个名字作为 Git 的用户名，并确保脚本适用于你的仓库 `https://github.com/yuuniji/about.git` 和邮箱 `yuuniji81@gmail.com`。
 

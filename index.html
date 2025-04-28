@@ -47,7 +47,7 @@
             margin: 20px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-align: center; /* Keep title centered */
+            text-align: center;
         }
 
         .underline {
@@ -57,9 +57,9 @@
         }
 
         .content-block {
-            width: 80%; /* Match the underline width */
-            margin: 0 auto; /* Center the block */
-            text-align: left; /* Align content inside to the left */
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
         }
 
         h2 {
@@ -100,7 +100,7 @@
             }
 
             .content-block {
-                width: 90%; /* Match the underline width */
+                width: 90%;
             }
 
             h1 {
@@ -136,7 +136,7 @@
             }
 
             .content-block {
-                width: 95%; /* Match the underline width */
+                width: 95%;
             }
         }
 
@@ -178,102 +178,86 @@
 
     <div class="container">
         <div class="underline"></div>
-        <h1 id="title">叶泽伟的作品集</h1>
+        <h1 id="title"></h1>
         <div class="underline"></div>
 
         <div class="content-block">
-            <h2 id="projects-heading">项目</h2>
-            <ul id="projects-list">
-                <li><a href="https://github.com/yuuniji" target="_blank">项目主页</a></li>
-                <li><a href="https://github.com/yuuniji/yuuniji.github.io" target="_blank">项目1</a> - 个人博客网站</li>
-                <li><a href="https://github.com/yuuniji/focus-flow" target="_blank">项目2</a> - 番茄钟</li>
-                <li><a href="https://github.com/yuuniji/word-to-markmap" target="_blank">项目3</a> - 单词导图</li>
-            </ul>
+            <h2 id="projects-heading"></h2>
+            <ul id="projects-list"></ul>
 
-            <h2 id="blog-heading">博客</h2>
-            <ul id="blog-list">
-                <li><a href="https://yuuniji.github.io/" target="_blank">博客主页</a></li>
-                <li><a href="https://yuuniji.github.io/posts/my-first-post/" target="_blank">文章1</a> - 我的博客搭建</li>
-                <li><a href="https://yuuniji.github.io/posts/roadmap-devops/" target="_blank">文章2</a> - DevOps 路线图</li>
-                <li><a href="https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/" target="_blank">文章3</a> - 《如何学好日语》系列</li>
-            </ul>
+            <h2 id="blog-heading"></h2>
+            <ul id="blog-list"></ul>
         </div>
     </div>
 
     <script>
+        // Data for projects and blog posts
+        const data = {
+            projects: [
+                { url: "https://github.com/yuuniji", label: { zh: "项目主页", en: "Projects Homepage", ja: "プロジェクトホームページ" } },
+                { url: "https://github.com/yuuniji/yuuniji.github.io", label: { zh: "项目1 - 个人博客网站", en: "Project 1 - Personal Blog Website", ja: "プロジェクト1 - 個人ブログサイト" } },
+                { url: "https://github.com/yuuniji/focus-flow", label: { zh: "项目2 - 番茄钟", en: "Project 2 - Pomodoro Timer", ja: "プロジェクト2 - ポモドーロタイマー" } },
+                { url: "https://github.com/yuuniji/word-to-markmap", label: { zh: "项目3 - 单词导图", en: "Project 3 - Word Mind Map", ja: "プロジェクト3 - ワードマインドマップ" } }
+            ],
+            blog: [
+                { url: "https://yuuniji.github.io/", label: { zh: "博客主页", en: "Blog Homepage", ja: "ブログホームページ" } },
+                { url: "https://yuuniji.github.io/posts/my-first-post/", label: { zh: "文章1 - 我的博客搭建", en: "Post 1 - My Blog Setup", ja: "記事1 - 私のブログ構築" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-devops/", label: { zh: "文章2 - DevOps 路线图", en: "Post 2 - DevOps Roadmap", ja: "記事2 - DevOps ロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/", label: { zh: "文章3 - 《如何学好日语》系列", en: "Post 3 - 'How to Learn Japanese Effectively' Series", ja: "記事3 - 『日本語を効果的に学ぶ方法』シリーズ" } }
+            ]
+        };
+
+        // Translations for static text (title and headings)
         const translations = {
             zh: {
                 title: "叶泽伟的作品集",
                 projectsHeading: "项目",
-                projects: [
-                    "项目主页",
-                    "项目1 - 个人博客网站",
-                    "项目2 - 番茄钟",
-                    "项目3 - 单词导图"
-                ],
-                blogHeading: "博客",
-                blog: [
-                    "博客主页",
-                    "文章1 - 我的博客搭建",
-                    "文章2 - DevOps 路线图",
-                    "文章3 - 《如何学好日语》系列"
-                ]
+                blogHeading: "博客"
             },
             en: {
                 title: "Ye Zewei's Portfolio",
                 projectsHeading: "Projects",
-                projects: [
-                    "Projects Homepage",
-                    "Project 1 - Personal Blog Website",
-                    "Project 2 - Pomodoro Timer",
-                    "Project 3 - Word Mind Map"
-                ],
-                blogHeading: "Blog",
-                blog: [
-                    "Blog Homepage",
-                    "Post 1 - My Blog Setup",
-                    "Post 2 - DevOps Roadmap",
-                    "Post 3 - 'How to Learn Japanese Effectively' Series"
-                ]
+                blogHeading: "Blog"
             },
             ja: {
                 title: "葉澤偉のポートフォリオ",
                 projectsHeading: "プロジェクト",
-                projects: [
-                    "プロジェクトホームページ",
-                    "プロジェクト1 - 個人ブログサイト",
-                    "プロジェクト2 - ポモドーロタイマー",
-                    "プロジェクト3 - ワードマインドマップ"
-                ],
-                blogHeading: "ブログ",
-                blog: [
-                    "ブログホームページ",
-                    "記事1 - 私のブログ構築",
-                    "記事2 - DevOps ロードマップ",
-                    "記事3 - 『日本語を効果的に学ぶ方法』シリーズ"
-                ]
+                blogHeading: "ブログ"
             }
         };
 
-        function changeLanguage(lang) {
+        // Function to render the content based on language
+        function renderContent(lang) {
             const content = translations[lang];
+            
+            // Update static text
             document.getElementById('title').textContent = content.title;
             document.getElementById('projects-heading').textContent = content.projectsHeading;
             document.getElementById('blog-heading').textContent = content.blogHeading;
 
+            // Render projects
             const projectsList = document.getElementById('projects-list');
-            projectsList.innerHTML = content.projects.map((item, index) => 
-                `<li><a href="${projectsList.children[index].querySelector('a').href}" target="_blank">${item}</a></li>`
+            projectsList.innerHTML = data.projects.map(project => 
+                `<li><a href="${project.url}" target="_blank">${project.label[lang]}</a></li>`
             ).join('');
 
+            // Render blog posts
             const blogList = document.getElementById('blog-list');
-            blogList.innerHTML = content.blog.map((item, index) => 
-                `<li><a href="${blogList.children[index].querySelector('a').href}" target="_blank">${item}</a></li>`
+            blogList.innerHTML = data.blog.map(post => 
+                `<li><a href="${post.url}" target="_blank">${post.label[lang]}</a></li>`
             ).join('');
 
-            // Update the page title
+            // Update page title
             document.title = content.title;
         }
+
+        // Function to change language
+        function changeLanguage(lang) {
+            renderContent(lang);
+        }
+
+        // Initialize with Chinese as default
+        renderContent('zh');
     </script>
 </body>
 </html>
