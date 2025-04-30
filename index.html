@@ -6,167 +6,355 @@
     <title>叶泽伟的作品集</title>
     <style>
         body {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
             margin: 0;
             padding: 0;
-            text-align: center;
-            line-height: 1.5;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            background: #f5f7fa;
+            color: #23272e;
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, color 0.3s;
         }
 
         .lang-switcher {
-            position: absolute;
-            top: 10px;
-            right: 20px;
+            position: fixed;
+            top: 18px;
+            right: 32px;
+            z-index: 10;
         }
-
         .lang-switcher button {
             background: none;
             border: none;
-            color: #000000;
+            color: #666;
             font-size: 14px;
             margin: 0 5px;
             cursor: pointer;
             text-decoration: underline;
+            font-family: inherit;
+            transition: color 0.2s;
         }
-
         .lang-switcher button:hover {
+            color: #23272e;
             text-decoration: none;
         }
 
-        h1 {
-            font-size: clamp(24px, 5vw, 36px);
+        .terminal-window {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.09);
+            max-width: 800px;
+            width: 95vw;
+            margin: 48px auto 24px auto;
+            overflow: hidden;
+            border: 1.5px solid #e0e3e7;
+            transition: background 0.3s, border 0.3s, box-shadow 0.3s;
+        }
+        .terminal-bar {
+            background: #f5f7fa;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 18px;
+            border-bottom: 1px solid #e0e3e7;
+            position: relative;
+        }
+        .mac-btn {
+            position: relative;
+            z-index: 3;
+        }
+        .mac-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-right: 16px;
+            justify-content: flex-start;
+        }
+        .mac-btn-group.placeholder {
+            width: 47px;
+            min-width: 47px;
+            max-width: 47px;
+            visibility: hidden;
+            pointer-events: none;
+            margin-right: 0;
+        }
+        .mac-btn {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-right: 7px;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .mac-close { background: #ff5f56; }
+        .mac-min { background: #ffbd2e; }
+        .mac-max { background: #27c93f; margin-right: 0; }
+        .terminal-content {
+            padding: 32px 30px 28px 30px;
+            min-height: 400px;
+        }
+        .terminal-title {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-family: inherit;
+            font-weight: 500;
+            color: #23272e;
+            background: transparent;
+            border: none;
+            letter-spacing: 0.5px;
+            text-shadow: none;
+            user-select: text;
+            z-index: 2;
+            height: 100%;
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            opacity: 1;
+            padding: 0 8px;
+        }
+        @media (max-width: 600px) {
+            .terminal-title {
+                font-size: 13.5px;
+                padding: 0 2px;
+            }
+            .mac-btn-group {
+                gap: 4px;
+                margin-right: 6px;
+            }
+            .mac-btn-group.placeholder {
+                width: 32px;
+                min-width: 32px;
+                max-width: 32px;
+            }
+        }
+        @media (max-width: 400px) {
+            .terminal-title {
+                font-size: 12px;
+                padding: 0 1px;
+            }
+            .mac-btn-group.placeholder {
+                width: 20px;
+                min-width: 20px;
+                max-width: 20px;
+            }
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 0.85em;
+            height: 1.1em;
+            background: none;
+            color: #27c93f;
             font-weight: bold;
-            margin: 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
+            font-size: 1em;
+            animation: blink 1s steps(1) infinite;
+            vertical-align: middle;
         }
-
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
         .underline {
-            border-bottom: 2px solid #000;
-            margin: 20px auto;
-            width: 80%;
+            border-bottom: 2px solid #e0e3e7;
+            margin: 18px auto 18px auto;
+            width: 90%;
+            transition: border-bottom 0.3s;
         }
-
         .content-block {
-            width: 80%;
+            width: 94%;
             margin: 0 auto;
             text-align: left;
+            font-family: inherit;
+            background: rgba(0,0,0,0.03);
+            border-radius: 6px;
+            padding: 10px 12px 12px 16px;
+            box-sizing: border-box;
+            font-size: 15px;
+            letter-spacing: 0.01em;
+            border-left: 3px solid #27c93f;
+            margin-top: 12px;
         }
-
         h2 {
-            font-size: clamp(20px, 3.5vw, 24px);
+            font-size: clamp(17px, 2.7vw, 20px);
             font-weight: bold;
-            margin: 30px 0 10px 0;
+            margin: 18px 0 6px 0;
+            color: #1a7cf7;
+            text-shadow: none;
+            transition: color 0.3s;
         }
 
         ul {
             list-style-type: none;
             padding: 0;
+            margin: 0 0 0 0;
         }
-
         li {
-            font-size: clamp(14px, 2vw, 16px);
-            margin-bottom: 10px;
+            font-size: clamp(13.5px, 2vw, 15px);
+            margin-bottom: 5px;
+            word-break: break-all;
+            line-height: 1.55;
+            font-family: inherit;
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            padding-left: 0;
         }
-
+        .prompt {
+            color: #27c93f;
+            font-weight: bold;
+            font-family: inherit;
+            user-select: none;
+            flex-shrink: 0;
+        }
         a {
-            color: #000000;
+            color: #1a7cf7;
             text-decoration: underline;
+            transition: color 0.2s;
+            font-family: inherit;
         }
-
         a:hover {
-            color: #000000;
-            text-decoration: none;
+            color: #23272e;
+            text-decoration: underline wavy;
         }
 
         /* Responsive adjustments */
         @media (max-width: 600px) {
-            .container {
-                padding: 20px 15px;
+            .terminal-window {
+                margin: 24px auto 12px auto;
             }
-
-            .underline {
-                width: 90%;
-                margin: 15px auto;
+            .terminal-content {
+                padding: 18px 7vw 18px 7vw;
             }
-
-            .content-block {
-                width: 90%;
-            }
-
             h1 {
                 margin: 15px 0;
             }
-
             h2 {
-                margin: 20px 0 8px 0;
+                margin: 16px 0 8px 0;
             }
-
-            li {
-                margin-bottom: 8px;
-            }
-
-            .lang-switcher {
-                top: 5px;
-                right: 10px;
-            }
-
-            .lang-switcher button {
-                font-size: 12px;
-                margin: 0 3px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .container {
-                padding: 15px 10px;
-            }
-
-            .underline {
-                width: 95%;
-            }
-
             .content-block {
-                width: 95%;
+                width: 99%;
+            }
+            .underline {
+                width: 98%;
+                margin: 10px auto;
+            }
+            .lang-switcher {
+                top: 8px;
+                right: 8vw;
+            }
+        }
+        @media (max-width: 400px) {
+            .terminal-content {
+                padding: 10px 2vw 10px 2vw;
+            }
+            .underline {
+                width: 99%;
+            }
+            .content-block {
+                width: 99%;
             }
         }
 
-        /* Dark mode */
+        /* 跟随系统色彩模式适配终端风格 */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #1A1A1A;
-                color: #E0E0E0;
+                background: #23272e;
+                color: #e3e5e8;
             }
-
-            .underline {
-                border-bottom: 2px solid #E0E0E0;
+            .terminal-title {
+                color: #e3e5e8;
+                background: transparent;
+                border: none;
             }
-
             .lang-switcher button {
-                color: #E0E0E0;
+                color: #bdbdbd;
             }
-
             .lang-switcher button:hover {
-                color: #CCCCCC;
+                color: #fff;
             }
-
+            .terminal-window {
+                background: #181c20;
+                border: 1.5px solid #23272e;
+                box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3);
+            }
+            .terminal-bar {
+                background: #23272e;
+                border-bottom: 1px solid #282c34;
+            }
+            h1 {
+                color: #e3e5e8;
+                text-shadow: 0 1px 0 #23272e;
+            }
+            .underline {
+                border-bottom: 2px solid #444c56;
+            }
+            h2 {
+                color: #aad7fe;
+                text-shadow: 0 1px 0 #23272e;
+            }
             a {
-                color: #E0E0E0;
+                color: #7ecfff;
             }
-
             a:hover {
-                color: #CCCCCC;
+                color: #fff;
             }
         }
+    /* 仿终端历史样式 */
+    .terminal-history {
+        font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+        font-size: 15px;
+        color: #e3e5e8;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        min-height: 220px;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
+    }
+    .term-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 2px;
+        word-break: break-all;
+    }
+    .term-prompt {
+        color: #27c93f;
+        font-weight: bold;
+        margin-right: 7px;
+        flex-shrink: 0;
+        user-select: none;
+    }
+    .term-cmd {
+        color: #fff;
+        font-weight: 500;
+    }
+    .term-output {
+        color: #aad7fe;
+        margin-left: 28px;
+        white-space: pre-line;
+        word-break: break-all;
+    }
+    .term-output a {
+        color: #7ecfff;
+        text-decoration: underline;
+        margin-right: 18px;
+        font-size: 15px;
+    }
+    .term-output a:hover {
+        color: #fff;
+        background: #1a7cf7;
+    }
+    @media (max-width: 600px) {
+        .terminal-history { font-size: 13px; min-height: 120px; }
+        .term-output a { font-size: 13px; }
+        .term-output { margin-left: 15px; }
+    }
     </style>
 </head>
 <body>
@@ -176,18 +364,18 @@
         <button onclick="changeLanguage('ja')">日本語</button>
     </div>
 
-    <div class="container">
-        <div class="underline"></div>
-        <h1 id="title"></h1>
-        <div class="underline"></div>
-
-        <div class="content-block">
-            <h2 id="projects-heading"></h2>
-            <ul id="projects-list"></ul>
-
-            <h2 id="blog-heading"></h2>
-            <ul id="blog-list"></ul>
+    <div class="terminal-window">
+        <div class="terminal-bar">
+            <span class="mac-btn-group">
+                <span class="mac-btn mac-close"></span>
+                <span class="mac-btn mac-min"></span>
+                <span class="mac-btn mac-max"></span>
+            </span>
+            <span id="title" class="terminal-title"></span>
+            <span class="mac-btn-group placeholder"></span>
         </div>
+        <div class="terminal-content">
+            <div class="terminal-history" id="terminal-history"></div>
     </div>
 
     <script>
@@ -201,15 +389,14 @@
             ],
             blog: [
                 { url: "https://yuuniji.github.io/", label: { zh: "博客主页", en: "Blog Homepage", ja: "ブログホームページ" } },
-                { url: "https://yuuniji.github.io/posts/learn-python/", label: { zh: "文章10 - 学习 Python", en: "Post 10 - Learn Python", ja: "記事10 - Pythonを学ぶ" } },
-                { url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/", label: { zh: "文章9 - 《如何学好日语》系列", en: "Post 9 - 'How to Learn Japanese Effectively' Series", ja: "記事9 - 『日本語を上手に学ぶ方法』シリーズ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-kubernetes/", label: { zh: "文章8 - Kubernetes 路线图", en: "Post 8 - Kubernetes Roadmap", ja: "記事8 - Kubernetesのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-docker/", label: { zh: "文章7 - Docker 路线图", en: "Post 7 - Docker Roadmap", ja: "記事7 - Dockerのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-terraform/", label: { zh: "文章6 - Terraform 路线图", en: "Post 6 - Terraform Roadmap", ja: "記事6 - Terraformのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-git-github/", label: { zh: "文章5 - Git 和 GitHub 路线图", en: "Post 5 - Git and GitHub Roadmap", ja: "記事5 - GitとGitHubのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-go/", label: { zh: "文章4 - Go 路线图", en: "Post 4 - Go Roadmap", ja: "記事4 - Goのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-python/", label: { zh: "文章3 - Python 路线图", en: "Post 3 - Python Roadmap", ja: "記事3 - Pythonのロードマップ" } },
-                { url: "https://yuuniji.github.io/posts/roadmap-devops/", label: { zh: "文章2 - DevOps 路线图", en: "Post 2 - DevOps Roadmap", ja: "記事2 - DevOpsのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-kubernetes/", label: { zh: "文章9 - Kubernetes 路线图", en: "Post 9 - Kubernetes Roadmap", ja: "記事9 - Kubernetesのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-docker/", label: { zh: "文章8 - Docker 路线图", en: "Post 8 - Docker Roadmap", ja: "記事8 - Dockerのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-terraform/", label: { zh: "文章7 - Terraform 路线图", en: "Post 7 - Terraform Roadmap", ja: "記事7 - Terraformのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-git-github/", label: { zh: "文章6 - Git 和 GitHub 路线图", en: "Post 6 - Git and GitHub Roadmap", ja: "記事6 - GitとGitHubのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-go/", label: { zh: "文章5 - Go 路线图", en: "Post 5 - Go Roadmap", ja: "記事5 - Goのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-devops/", label: { zh: "文章4 - DevOps 路线图", en: "Post 4 - DevOps Roadmap", ja: "記事4 - DevOpsのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/python-0-overview/", label: { zh: "文章3 - 《如何学好Python》系列", en: "Post 3 - 'How to Learn Python Effectively' Series", ja: "記事3 - 『Pythonを上手に学ぶ方法』シリーズ" } },
+                { url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/", label: { zh: "文章2 - 《如何学好日语》系列", en: "Post 2 - 'How to Learn Japanese Effectively' Series", ja: "記事2 - 『日本語を上手に学ぶ方法』シリーズ" } },
                 { url: "https://yuuniji.github.io/posts/my-first-post/", label: { zh: "文章1 - 我的博客搭建", en: "Post 1 - Building My Blog", ja: "記事1 - 私のブログ構築" } }
             ]
         };
@@ -237,25 +424,89 @@
         function renderContent(lang) {
             const content = translations[lang];
             
-            // Update static text
-            document.getElementById('title').textContent = content.title;
-            document.getElementById('projects-heading').textContent = content.projectsHeading;
-            document.getElementById('blog-heading').textContent = content.blogHeading;
-
-            // Render projects
-            const projectsList = document.getElementById('projects-list');
-            projectsList.innerHTML = data.projects.map(project => 
-                `<li><a href="${project.url}" target="_blank">${project.label[lang]}</a></li>`
-            ).join('');
-
-            // Render blog posts
-            const blogList = document.getElementById('blog-list');
-            blogList.innerHTML = data.blog.map(post => 
-                `<li><a href="${post.url}" target="_blank">${post.label[lang]}</a></li>`
-            ).join('');
-
             // Update page title
             document.title = content.title;
+            // Terminal title栏显示（带光标）
+            const titleEl = document.getElementById('title');
+            titleEl.setAttribute('title', content.title);
+            titleEl.innerHTML = `${content.title}<span class="terminal-cursor">▋</span>`;
+
+            // 渲染终端历史
+            renderTerminalHistory(lang);
+        }
+
+        // 仿终端命令历史逻辑
+        // 全局变量用于终止动画
+        let terminalHistoryTimer = null;
+        function renderTerminalHistory(lang) {
+            const historyEl = document.getElementById('terminal-history');
+            historyEl.innerHTML = '';
+            if (terminalHistoryTimer) {
+                clearTimeout(terminalHistoryTimer);
+                terminalHistoryTimer = null;
+            }
+            const dirNames = {
+                zh: { project: '项目', blog: '博客' },
+                en: { project: 'Projects', blog: 'Blog' },
+                ja: { project: 'プロジェクト', blog: 'ブログ' }
+            };
+            const dirs = dirNames[lang];
+            const prompt = '<span class="term-prompt">➜ ~ %</span>';
+            const promptProjects = `<span class="term-prompt">➜ ${dirs.project} %</span>`;
+            const promptBlog = `<span class="term-prompt">➜ ${dirs.blog} %</span>`;
+
+            // 历史步骤
+            const steps = [
+                { type: 'cmd', prompt, cmd: 'ls' },
+                { type: 'output', output: `${dirs.project}  ${dirs.blog}` },
+                { type: 'cmd', prompt, cmd: `cd ~/${dirs.project} && ls` },
+                { type: 'output', output: data.projects.map(prj => `<a href="${prj.url}" target="_blank">${prj.label[lang]}</a>`).join('<br>') },
+                { type: 'cmd', prompt, cmd: `cd ~/${dirs.blog} && ls` },
+                { type: 'output', output: data.blog.map(blog => `<a href="${blog.url}" target="_blank">${blog.label[lang]}</a>`).join('<br>') }
+            ];
+
+            let i = 0;
+            function typeCommand(row, prompt, cmd, cb) {
+                row.innerHTML = prompt + ' <span class="term-cmd"></span><span class="terminal-cursor">▋</span>';
+                const cmdSpan = row.querySelector('.term-cmd');
+                const cursor = row.querySelector('.terminal-cursor');
+                let idx = 0;
+                function typeChar() {
+                    if (idx <= cmd.length) {
+                        cmdSpan.textContent = cmd.slice(0, idx);
+                        cursor.style.display = 'inline-block';
+                        historyEl.scrollTop = historyEl.scrollHeight;
+                        idx++;
+                        terminalHistoryTimer = setTimeout(typeChar, 17); // 更快的打字速度
+                    } else {
+                        if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor); // 移除光标
+                        if (cb) cb();
+                    }
+                }
+                typeChar();
+            }
+
+            function nextStep() {
+                if (i >= steps.length) return;
+                const s = steps[i];
+                let row = document.createElement('div');
+                row.className = 'term-row';
+                if (s.type === 'cmd') {
+                    // 打字效果
+                    historyEl.appendChild(row);
+                    typeCommand(row, s.prompt, s.cmd, function() {
+                        i++;
+                        terminalHistoryTimer = setTimeout(nextStep, 120);
+                    });
+                } else {
+                    row.innerHTML = `<div class="term-output">${s.output}</div>`;
+                    historyEl.appendChild(row);
+                    historyEl.scrollTop = historyEl.scrollHeight;
+                    i++;
+                    terminalHistoryTimer = setTimeout(nextStep, 420);
+                }
+            }
+            nextStep();
         }
 
         // Function to change language

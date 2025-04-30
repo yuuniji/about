@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>叶泽伟的作品集</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            line-height: 1.5;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            color: #000000;
+            font-size: 14px;
+            margin: 0 5px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .lang-switcher button:hover {
+            text-decoration: none;
+        }
+
+        h1 {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: bold;
+            margin: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .underline {
+            border-bottom: 2px solid #000;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .content-block {
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        h2 {
+            font-size: clamp(20px, 3.5vw, 24px);
+            font-weight: bold;
+            margin: 30px 0 10px 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: clamp(14px, 2vw, 16px);
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .underline {
+                width: 90%;
+                margin: 15px auto;
+            }
+
+            .content-block {
+                width: 90%;
+            }
+
+            h1 {
+                margin: 15px 0;
+            }
+
+            h2 {
+                margin: 20px 0 8px 0;
+            }
+
+            li {
+                margin-bottom: 8px;
+            }
+
+            .lang-switcher {
+                top: 5px;
+                right: 10px;
+            }
+
+            .lang-switcher button {
+                font-size: 12px;
+                margin: 0 3px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 15px 10px;
+            }
+
+            .underline {
+                width: 95%;
+            }
+
+            .content-block {
+                width: 95%;
+            }
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1A1A1A;
+                color: #E0E0E0;
+            }
+
+            .underline {
+                border-bottom: 2px solid #E0E0E0;
+            }
+
+            .lang-switcher button {
+                color: #E0E0E0;
+            }
+
+            .lang-switcher button:hover {
+                color: #CCCCCC;
+            }
+
+            a {
+                color: #E0E0E0;
+            }
+
+            a:hover {
+                color: #CCCCCC;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switcher">
+        <button onclick="changeLanguage('zh')">中文</button>
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('ja')">日本語</button>
+    </div>
+
+    <div class="container">
+        <div class="underline"></div>
+        <h1 id="title"></h1>
+        <div class="underline"></div>
+
+        <div class="content-block">
+            <h2 id="projects-heading"></h2>
+            <ul id="projects-list"></ul>
+
+            <h2 id="blog-heading"></h2>
+            <ul id="blog-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Data for projects and blog posts
+        const data = {
+            projects: [
+                { url: "https://github.com/yuuniji", label: { zh: "项目主页", en: "Projects Homepage", ja: "プロジェクトホームページ" } },
+                { url: "https://github.com/yuuniji/yuuniji.github.io", label: { zh: "项目1 - 个人博客网站", en: "Project 1 - Personal Blog Website", ja: "プロジェクト1 - 個人ブログサイト" } },
+                { url: "https://github.com/yuuniji/focus-flow", label: { zh: "项目2 - 番茄钟", en: "Project 2 - Pomodoro Timer", ja: "プロジェクト2 - ポモドーロタイマー" } },
+                { url: "https://github.com/yuuniji/word-to-markmap", label: { zh: "项目3 - 单词导图", en: "Project 3 - Word Mind Map", ja: "プロジェクト3 - ワードマインドマップ" } }
+            ],
+            blog: [
+                { url: "https://yuuniji.github.io/", label: { zh: "博客主页", en: "Blog Homepage", ja: "ブログホームページ" } },
+                { url: "https://yuuniji.github.io/posts/learn-python/", label: { zh: "文章10 - 学习 Python", en: "Post 10 - Learn Python", ja: "記事10 - Pythonを学ぶ" } },
+                { url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/", label: { zh: "文章9 - 《如何学好日语》系列", en: "Post 9 - 'How to Learn Japanese Effectively' Series", ja: "記事9 - 『日本語を上手に学ぶ方法』シリーズ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-kubernetes/", label: { zh: "文章8 - Kubernetes 路线图", en: "Post 8 - Kubernetes Roadmap", ja: "記事8 - Kubernetesのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-docker/", label: { zh: "文章7 - Docker 路线图", en: "Post 7 - Docker Roadmap", ja: "記事7 - Dockerのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-terraform/", label: { zh: "文章6 - Terraform 路线图", en: "Post 6 - Terraform Roadmap", ja: "記事6 - Terraformのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-git-github/", label: { zh: "文章5 - Git 和 GitHub 路线图", en: "Post 5 - Git and GitHub Roadmap", ja: "記事5 - GitとGitHubのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-go/", label: { zh: "文章4 - Go 路线图", en: "Post 4 - Go Roadmap", ja: "記事4 - Goのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-python/", label: { zh: "文章3 - Python 路线图", en: "Post 3 - Python Roadmap", ja: "記事3 - Pythonのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/roadmap-devops/", label: { zh: "文章2 - DevOps 路线图", en: "Post 2 - DevOps Roadmap", ja: "記事2 - DevOpsのロードマップ" } },
+                { url: "https://yuuniji.github.io/posts/my-first-post/", label: { zh: "文章1 - 我的博客搭建", en: "Post 1 - Building My Blog", ja: "記事1 - 私のブログ構築" } }
+            ]
+        };
+
+        // Translations for static text (title and headings)
+        const translations = {
+            zh: {
+                title: "叶泽伟的作品集",
+                projectsHeading: "项目",
+                blogHeading: "博客"
+            },
+            en: {
+                title: "Ye Zewei's Portfolio",
+                projectsHeading: "Projects",
+                blogHeading: "Blog"
+            },
+            ja: {
+                title: "葉澤偉のポートフォリオ",
+                projectsHeading: "プロジェクト",
+                blogHeading: "ブログ"
+            }
+        };
+
+        // Function to render the content based on language
+        function renderContent(lang) {
+            const content = translations[lang];
+            
+            // Update static text
+            document.getElementById('title').textContent = content.title;
+            document.getElementById('projects-heading').textContent = content.projectsHeading;
+            document.getElementById('blog-heading').textContent = content.blogHeading;
+
+            // Render projects
+            const projectsList = document.getElementById('projects-list');
+            projectsList.innerHTML = data.projects.map(project => 
+                `<li><a href="${project.url}" target="_blank">${project.label[lang]}</a></li>`
+            ).join('');
+
+            // Render blog posts
+            const blogList = document.getElementById('blog-list');
+            blogList.innerHTML = data.blog.map(post => 
+                `<li><a href="${post.url}" target="_blank">${post.label[lang]}</a></li>`
+            ).join('');
+
+            // Update page title
+            document.title = content.title;
+        }
+
+        // Function to change language
+        function changeLanguage(lang) {
+            renderContent(lang);
+        }
+
+        // Initialize with Chinese as default
+        renderContent('zh');
+    </script>
+</body>
+</html>
