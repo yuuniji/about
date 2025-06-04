@@ -98,7 +98,6 @@
             height: 36px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             padding: 0 18px;
             border-bottom: 1px solid #e0e3e7;
             position: relative;
@@ -124,8 +123,9 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            margin-right: 16px;
-            justify-content: flex-start;
+            position: absolute;
+            left: 18px;
+            z-index: 3;
         }
 
         .mac-btn-group.placeholder {
@@ -158,10 +158,9 @@
         }
 
         .terminal-title {
-            flex: 1 1 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 16px;
             font-family: inherit;
             font-weight: 500;
@@ -173,31 +172,30 @@
             user-select: text;
             z-index: 2;
             height: 100%;
-            min-width: 0;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
             white-space: nowrap;
             text-overflow: ellipsis;
             opacity: 1;
             padding: 0 8px;
-            margin: 0 120px;
         }
 
         .clock {
             position: absolute;
-            right: 120px;
+            right: 18px;
             font-size: 14px;
             color: #666;
             font-family: inherit;
             white-space: nowrap;
             transition: all 0.3s ease;
+            z-index: 3;
         }
 
         @media (max-width: 900px) {
             .terminal-title {
-                margin: 0 100px;
+                font-size: 15px;
             }
             .clock {
-                right: 100px;
                 font-size: 13px;
             }
         }
