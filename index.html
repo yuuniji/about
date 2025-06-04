@@ -63,8 +63,8 @@
             position: relative;
             z-index: 2;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
             box-shadow: 
                 0 2px 4px rgba(0, 0, 0, 0.02),
@@ -77,9 +77,25 @@
             margin: 48px auto 24px auto;
             overflow: hidden;
             border: 1.5px solid rgba(224, 227, 231, 0.8);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(0);
+            will-change: transform, opacity;
             animation: terminalAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Safari 特定的样式修复 */
+        @supports (-webkit-touch-callout: none) {
+            .terminal-window {
+                background: rgba(255, 255, 255, 0.98);
+            }
+            
+            @media (prefers-color-scheme: dark) {
+                .terminal-window {
+                    background: rgba(24, 24, 24, 0.98);
+                }
+            }
         }
 
         @keyframes terminalAppear {
@@ -202,7 +218,10 @@
 
         @media (max-width: 768px) {
             .terminal-title {
-                margin: 0 80px;
+                font-size: 15px;
+                max-width: calc(100% - 160px);
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .clock {
                 right: 80px;
@@ -211,42 +230,82 @@
         }
 
         @media (max-width: 600px) {
+            .terminal-window {
+                margin: 12px auto;
+                width: 98vw;
+                border-radius: 8px;
+            }
+
+            .terminal-content {
+                padding: 16px 12px;
+                min-height: 100px;
+            }
+
+            .terminal-bar {
+                height: 32px;
+                padding: 0 12px;
+            }
+
+            .mac-btn {
+                width: 11px;
+                height: 11px;
+                margin-right: 6px;
+            }
+
+            .mac-btn-group {
+                left: 12px;
+            }
+
             .terminal-title {
-                margin: 0 60px;
                 font-size: 13.5px;
             }
-            .clock {
-                right: 60px;
-                font-size: 11px;
-            }
-        }
 
-        @media (max-width: 480px) {
-            .terminal-title {
-                margin: 0 40px;
-                font-size: 12px;
-            }
             .clock {
-                right: 40px;
-                font-size: 10px;
+                right: 12px;
+                font-size: 11px;
             }
         }
 
         @media (max-width: 400px) {
-            .terminal-title {
-                margin: 0 20px;
-                font-size: 11px;
+            .terminal-window {
+                margin: 8px auto;
+                width: 99vw;
+                border-radius: 6px;
             }
+
+            .terminal-content {
+                padding: 12px 8px;
+            }
+
+            .terminal-bar {
+                height: 28px;
+                padding: 0 8px;
+            }
+
+            .mac-btn {
+                width: 10px;
+                height: 10px;
+                margin-right: 5px;
+            }
+
+            .mac-btn-group {
+                left: 8px;
+            }
+
+            .terminal-title {
+                font-size: 12px;
+            }
+
             .clock {
-                right: 20px;
-                font-size: 9px;
+                right: 8px;
+                font-size: 10px;
             }
         }
 
         @media (max-width: 320px) {
             .terminal-title {
-                margin: 0 10px;
                 font-size: 10px;
+                max-width: calc(100% - 20px);
             }
             .clock {
                 display: none;
@@ -270,6 +329,7 @@
             animation: blink 1s steps(1) infinite;
             vertical-align: middle;
             transition: color 0.3s;
+            will-change: opacity;
         }
 
         @keyframes blink {
@@ -488,6 +548,7 @@
             word-break: break-all;
             opacity: 0;
             transform: translateY(10px);
+            will-change: transform, opacity;
             animation: rowAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
@@ -530,28 +591,34 @@
             position: relative;
             padding: 2px 4px;
             border-radius: 4px;
+            display: inline-block;
         }
 
-        .term-output a:hover, .term-output a:focus {
-            color: #003d82;
-            background: rgba(26, 124, 247, 0.1);
-            text-decoration: none;
-            transform: translateY(-1px);
+        .term-output a::before {
+            content: attr(data-index);
+            position: absolute;
+            left: -20px;
+            color: #666;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .term-output a:hover::before,
+        .term-output a:focus::before {
+            opacity: 1;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .term-output a::before {
+                color: #bdbdbd;
+            }
         }
 
         @media (max-width: 600px) {
-            .terminal-history {
-                font-size: 13px;
-                min-height: 120px;
-            }
-
-            .term-output a {
-                font-size: 13px;
-                margin-right: 12px;
-            }
-
-            .term-output {
-                margin-left: 15px;
+            .term-output a::before {
+                left: -16px;
+                font-size: 11px;
             }
         }
 
@@ -577,82 +644,19 @@
             }
         }
 
-        /* 添加键盘焦点样式 */
-        :focus {
+        /* 增强键盘导航焦点状态 */
+        a:focus, button:focus {
             outline: 3px solid #1a7cf7;
             outline-offset: 2px;
-        }
-
-        /* 提高链接颜色对比度 */
-        a {
-            color: #0056b3;
-            text-decoration: underline;
-            transition: color 0.2s, background-color 0.2s;
-            font-family: inherit;
-        }
-
-        a:hover, a:focus {
-            color: #003d82;
-            text-decoration: underline wavy;
             background-color: rgba(26, 124, 247, 0.1);
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
-        /* 提高标题颜色对比度 */
-        h2 {
-            font-size: clamp(17px, 2.7vw, 20px);
-            font-weight: bold;
-            margin: 18px 0 6px 0;
-            color: #0056b3;
-            text-shadow: none;
-            transition: color 0.3s;
-        }
-
-        /* 深色模式下的颜色对比度优化 */
         @media (prefers-color-scheme: dark) {
-            body {
-                background: #1a1a1a;
-                color: #ffffff;
-            }
-
-            .terminal-window {
-                background: rgba(24, 24, 24, 0.95);
-                box-shadow: 
-                    0 2px 4px rgba(0, 0, 0, 0.1),
-                    0 4px 8px rgba(0, 0, 0, 0.1),
-                    0 8px 16px rgba(0, 0, 0, 0.1),
-                    0 16px 32px rgba(0, 0, 0, 0.1),
-                    0 0 0 1px rgba(255, 255, 255, 0.05);
-                border: 1.5px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .terminal-bar {
-                background: #1a1a1a;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .mac-btn {
-                border-color: rgba(255, 255, 255, 0.1);
-            }
-
-            .term-cmd {
-                color: #ffffff;
-            }
-
-            .term-output {
-                color: #4dabff;
-            }
-
-            .term-output a {
-                color: #4dabff;
-            }
-
-            .term-output a:hover, .term-output a:focus {
-                color: #ffffff;
-                background: rgba(77, 171, 255, 0.2);
-            }
-
-            .terminal-cursor {
-                color: #27c93f;
+            a:focus, button:focus {
+                outline-color: #4dabff;
+                background-color: rgba(77, 171, 255, 0.2);
             }
         }
 
@@ -668,9 +672,10 @@
             border-radius: 4px;
             font-size: 14px;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: none;
             z-index: 1000;
+            will-change: opacity;
         }
 
         .nav-hint.visible {
@@ -800,7 +805,7 @@
 
         // 根据系统主题切换粒子颜色
         function updateParticleColor(isDark) {
-            const color = isDark ? '#27c93f' : '#27c93f';
+            const color = isDark ? '#4dabff' : '#27c93f';
             const particles = window.pJSDom[0].pJS.particles;
             particles.color.value = color;
             particles.line_linked.color = color;
@@ -983,11 +988,11 @@
             // 历史步骤
             const steps = [
                 { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
-                { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage">${dirs.blog}</a>` },
+                { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage" data-index="1">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage" data-index="2">${dirs.blog}</a>` },
                 { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
-                { type: 'output', output: data.projects.map((prj, index) => `<a href="${prj.url}" target="_blank" aria-label="${prj.label[lang]}">${prj.label[lang]}</a>`).join('<br>') },
+                { type: 'output', output: data.projects.map((prj, index) => `<a href="${prj.url}" target="_blank" aria-label="${prj.label[lang]}" data-index="${index + 1}">${prj.label[lang]}</a>`).join('<br>') },
                 { type: 'cmd', prompt: promptBlog, cmd: `cd ~/${dirs.blog} && ls`, ariaLabel: `Change to ${dirs.blog} directory and list contents` },
-                { type: 'output', output: data.blog.map((blog, index) => `<a href="${blog.url}" target="_blank" aria-label="${blog.label[lang]}">${blog.label[lang]}</a>`).join('<br>') }
+                { type: 'output', output: data.blog.map((blog, index) => `<a href="${blog.url}" target="_blank" aria-label="${blog.label[lang]}" data-index="${index + 1}">${blog.label[lang]}</a>`).join('<br>') }
             ];
 
             let i = 0;
@@ -1090,8 +1095,17 @@
             }, 5000);
         }
 
-        // 初始化
+        // 修改初始化函数，确保在 Safari 中正确加载
         function init() {
+            // 确保 DOM 完全加载
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeContent);
+            } else {
+                initializeContent();
+            }
+        }
+
+        function initializeContent() {
             // 获取浏览器语言
             const browserLang = navigator.language || navigator.userLanguage;
             // 从 localStorage 获取保存的语言设置
@@ -1131,9 +1145,25 @@
             
             // 设置初始语言
             currentLang = initialLang;
-            renderContent(initialLang);
-            updateNavHint(initialLang);
             
+            // 确保在渲染内容之前所有必要的元素都已存在
+            const titleEl = document.getElementById('title');
+            const historyEl = document.getElementById('terminal-history');
+            const clockEl = document.getElementById('clock');
+            
+            if (titleEl && historyEl && clockEl) {
+                renderContent(initialLang);
+                updateNavHint(initialLang);
+                
+                // 初始化键盘导航
+                initializeKeyboardNavigation();
+            } else {
+                // 如果元素不存在，等待一小段时间后重试
+                setTimeout(initializeContent, 100);
+            }
+        }
+
+        function initializeKeyboardNavigation() {
             let currentFocusIndex = -1;
             const focusableElements = document.querySelectorAll('a, button');
             
