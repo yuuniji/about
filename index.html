@@ -663,26 +663,20 @@
             position: fixed;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            background: rgba(26, 124, 247, 0.1);
-            color: #0056b3;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
             padding: 8px 16px;
+            border-radius: 4px;
             font-size: 14px;
-            text-align: center;
-            border: 1px solid rgba(26, 124, 247, 0.2);
-            border-radius: 6px;
             opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 100;
+            transition: opacity 0.3s;
             pointer-events: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: max-content;
+            z-index: 1000;
         }
 
         .nav-hint.visible {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -706,28 +700,28 @@
 
 <body>
     <div id="particles-js"></div>
-    <div class="lang-switcher" role="navigation" aria-label="Language Switcher">
-        <button onclick="changeLanguage('zh')" aria-label="Switch to Chinese">中文</button>
-        <button onclick="changeLanguage('en')" aria-label="Switch to English">English</button>
-        <button onclick="changeLanguage('ja')" aria-label="Switch to Japanese">日本語</button>
+    <div class="lang-switcher">
+        <button onclick="changeLanguage('zh')">中文</button>
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('ja')">日本語</button>
     </div>
 
-    <div class="terminal-window" role="main" aria-label="Terminal Interface">
-        <div class="terminal-bar" role="banner">
-            <span class="mac-btn-group" role="presentation">
-                <span class="mac-btn mac-close" role="presentation"></span>
-                <span class="mac-btn mac-min" role="presentation"></span>
-                <span class="mac-btn mac-max" role="presentation"></span>
-            </span>
-            <span id="title" class="terminal-title" role="heading" aria-level="1"></span>
-            <span id="clock" class="clock" role="status" aria-live="polite"></span>
-            <span class="mac-btn-group placeholder" role="presentation"></span>
+    <div class="terminal-window">
+        <div class="terminal-bar">
+            <div class="mac-btn-group">
+                <div class="mac-btn mac-close"></div>
+                <div class="mac-btn mac-min"></div>
+                <div class="mac-btn mac-max"></div>
+            </div>
+            <div id="title" class="terminal-title">叶泽伟的作品集</div>
+            <div id="clock" class="clock"></div>
         </div>
         <div class="terminal-content">
-            <div class="terminal-history" id="terminal-history" role="log" aria-live="polite"></div>
+            <div id="terminal-history"></div>
         </div>
     </div>
-    <div class="nav-hint" id="nav-hint" role="status" aria-live="polite"></div>
+
+    <div id="nav-hint" class="nav-hint"></div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
