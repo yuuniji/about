@@ -21,6 +21,8 @@
             transition: background 0.3s, color 0.3s;
             position: relative;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         #particles-js {
@@ -62,14 +64,33 @@
             z-index: 2;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 12px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.09);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.02),
+                0 4px 8px rgba(0, 0, 0, 0.02),
+                0 8px 16px rgba(0, 0, 0, 0.02),
+                0 16px 32px rgba(0, 0, 0, 0.02),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
             max-width: 800px;
             width: 95vw;
             margin: 48px auto 24px auto;
             overflow: hidden;
             border: 1.5px solid rgba(224, 227, 231, 0.8);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+            animation: terminalAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes terminalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .terminal-bar {
@@ -81,11 +102,22 @@
             padding: 0 18px;
             border-bottom: 1px solid #e0e3e7;
             position: relative;
+            transition: background 0.3s, border-color 0.3s;
         }
 
         .mac-btn {
-            position: relative;
-            z-index: 3;
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-right: 7px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .mac-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
         }
 
         .mac-btn-group {
@@ -105,15 +137,6 @@
             margin-right: 0;
         }
 
-        .mac-btn {
-            display: inline-block;
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            margin-right: 7px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
         .mac-close {
             background: #ff5f56;
         }
@@ -130,6 +153,8 @@
         .terminal-content {
             padding: 32px 30px 28px 30px;
             min-height: 400px;
+            position: relative;
+            transition: padding 0.3s;
         }
 
         .terminal-title {
@@ -246,10 +271,10 @@
             font-size: 1em;
             animation: blink 1s steps(1) infinite;
             vertical-align: middle;
+            transition: color 0.3s;
         }
 
         @keyframes blink {
-
             0%,
             50% {
                 opacity: 1;
@@ -334,6 +359,10 @@
         @media (max-width: 600px) {
             .terminal-window {
                 margin: 24px auto 12px auto;
+                box-shadow: 
+                    0 2px 4px rgba(0, 0, 0, 0.02),
+                    0 4px 8px rgba(0, 0, 0, 0.02),
+                    0 8px 16px rgba(0, 0, 0, 0.02);
             }
 
             .terminal-content {
@@ -399,13 +428,19 @@
             }
 
             .terminal-window {
-                background: rgba(24, 28, 32, 0.95);
-                border: 1.5px solid rgba(35, 39, 46, 0.8);
+                background: rgba(24, 24, 24, 0.95);
+                box-shadow: 
+                    0 2px 4px rgba(0, 0, 0, 0.1),
+                    0 4px 8px rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    0 16px 32px rgba(0, 0, 0, 0.1),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+                border: 1.5px solid rgba(255, 255, 255, 0.1);
             }
 
             .terminal-bar {
-                background: #23272e;
-                border-bottom: 1px solid #282c34;
+                background: #1a1a1a;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             h1 {
@@ -453,6 +488,16 @@
             align-items: flex-start;
             margin-bottom: 2px;
             word-break: break-all;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: rowAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes rowAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .term-prompt {
@@ -461,30 +506,39 @@
             margin-right: 7px;
             flex-shrink: 0;
             user-select: none;
+            transition: color 0.3s;
         }
 
         .term-cmd {
-            color: #fff;
+            color: #23272e;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
         .term-output {
-            color: #aad7fe;
+            color: #0056b3;
             margin-left: 28px;
             white-space: pre-line;
             word-break: break-all;
+            transition: color 0.3s, margin 0.3s;
         }
 
         .term-output a {
-            color: #7ecfff;
+            color: #0056b3;
             text-decoration: underline;
             margin-right: 18px;
             font-size: 15px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 2px 4px;
+            border-radius: 4px;
         }
 
-        .term-output a:hover {
-            color: #fff;
-            background: #1a7cf7;
+        .term-output a:hover, .term-output a:focus {
+            color: #003d82;
+            background: rgba(26, 124, 247, 0.1);
+            text-decoration: none;
+            transform: translateY(-1px);
         }
 
         @media (max-width: 600px) {
@@ -495,6 +549,7 @@
 
             .term-output a {
                 font-size: 13px;
+                margin-right: 12px;
             }
 
             .term-output {
@@ -523,378 +578,641 @@
                 color: #1a7cf7;
             }
         }
+
+        /* 添加键盘焦点样式 */
+        :focus {
+            outline: 3px solid #1a7cf7;
+            outline-offset: 2px;
+        }
+
+        /* 提高链接颜色对比度 */
+        a {
+            color: #0056b3;
+            text-decoration: underline;
+            transition: color 0.2s, background-color 0.2s;
+            font-family: inherit;
+        }
+
+        a:hover, a:focus {
+            color: #003d82;
+            text-decoration: underline wavy;
+            background-color: rgba(26, 124, 247, 0.1);
+        }
+
+        /* 提高标题颜色对比度 */
+        h2 {
+            font-size: clamp(17px, 2.7vw, 20px);
+            font-weight: bold;
+            margin: 18px 0 6px 0;
+            color: #0056b3;
+            text-shadow: none;
+            transition: color 0.3s;
+        }
+
+        /* 深色模式下的颜色对比度优化 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1a1a1a;
+                color: #ffffff;
+            }
+
+            .terminal-window {
+                background: rgba(24, 24, 24, 0.95);
+                box-shadow: 
+                    0 2px 4px rgba(0, 0, 0, 0.1),
+                    0 4px 8px rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    0 16px 32px rgba(0, 0, 0, 0.1),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+                border: 1.5px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .terminal-bar {
+                background: #1a1a1a;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .mac-btn {
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .term-cmd {
+                color: #ffffff;
+            }
+
+            .term-output {
+                color: #4dabff;
+            }
+
+            .term-output a {
+                color: #4dabff;
+            }
+
+            .term-output a:hover, .term-output a:focus {
+                color: #ffffff;
+                background: rgba(77, 171, 255, 0.2);
+            }
+
+            .terminal-cursor {
+                color: #27c93f;
+            }
+        }
+
+        /* 修改导航提示样式 */
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            background: rgba(26, 124, 247, 0.1);
+            color: #0056b3;
+            padding: 8px 16px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid rgba(26, 124, 247, 0.2);
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: max-content;
+        }
+
+        .nav-hint.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-hint {
+                background: rgba(77, 171, 255, 0.1);
+                color: #4dabff;
+                border-color: rgba(77, 171, 255, 0.2);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-hint {
+                font-size: 12px;
+                padding: 6px 12px;
+                bottom: 10px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div id="particles-js"></div>
-    <div class="lang-switcher">
-        <button onclick="changeLanguage('zh')">中文</button>
-        <button onclick="changeLanguage('en')">English</button>
-        <button onclick="changeLanguage('ja')">日本語</button>
+    <div class="lang-switcher" role="navigation" aria-label="Language Switcher">
+        <button onclick="changeLanguage('zh')" aria-label="Switch to Chinese">中文</button>
+        <button onclick="changeLanguage('en')" aria-label="Switch to English">English</button>
+        <button onclick="changeLanguage('ja')" aria-label="Switch to Japanese">日本語</button>
     </div>
 
-    <div class="terminal-window">
-        <div class="terminal-bar">
-            <span class="mac-btn-group">
-                <span class="mac-btn mac-close"></span>
-                <span class="mac-btn mac-min"></span>
-                <span class="mac-btn mac-max"></span>
+    <div class="terminal-window" role="main" aria-label="Terminal Interface">
+        <div class="terminal-bar" role="banner">
+            <span class="mac-btn-group" role="presentation">
+                <span class="mac-btn mac-close" role="presentation"></span>
+                <span class="mac-btn mac-min" role="presentation"></span>
+                <span class="mac-btn mac-max" role="presentation"></span>
             </span>
-            <span id="title" class="terminal-title"></span>
-            <span id="clock" class="clock"></span>
-            <span class="mac-btn-group placeholder"></span>
+            <span id="title" class="terminal-title" role="heading" aria-level="1"></span>
+            <span id="clock" class="clock" role="status" aria-live="polite"></span>
+            <span class="mac-btn-group placeholder" role="presentation"></span>
         </div>
         <div class="terminal-content">
-            <div class="terminal-history" id="terminal-history"></div>
+            <div class="terminal-history" id="terminal-history" role="log" aria-live="polite"></div>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <script>
-            // 初始化粒子动画
-            particlesJS('particles-js', {
-                particles: {
-                    number: {
-                        value: 80,
-                        density: {
-                            enable: true,
-                            value_area: 800
-                        }
-                    },
-                    color: {
-                        value: '#27c93f'
-                    },
-                    shape: {
-                        type: 'circle'
-                    },
-                    opacity: {
-                        value: 0.5,
-                        random: true,
-                        anim: {
-                            enable: true,
-                            speed: 1,
-                            opacity_min: 0.1,
-                            sync: false
-                        }
-                    },
-                    size: {
-                        value: 3,
-                        random: true
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: '#27c93f',
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: 'none',
-                        random: true,
-                        straight: false,
-                        out_mode: 'out',
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: 'canvas',
-                    events: {
-                        onhover: {
-                            enable: true,
-                            mode: 'grab'
-                        },
-                        onclick: {
-                            enable: true,
-                            mode: 'push'
-                        },
-                        resize: true
-                    },
-                    modes: {
-                        grab: {
-                            distance: 140,
-                            line_linked: {
-                                opacity: 1
-                            }
-                        },
-                        push: {
-                            particles_nb: 4
-                        }
-                    }
-                },
-                retina_detect: true
-            });
-
-            // 根据系统主题切换粒子颜色
-            function updateParticleColor(isDark) {
-                const color = isDark ? '#27c93f' : '#27c93f';
-                const particles = window.pJSDom[0].pJS.particles;
-                particles.color.value = color;
-                particles.line_linked.color = color;
-                window.pJSDom[0].pJS.fn.particlesRefresh();
-            }
-
-            // 监听系统主题变化
-            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            darkModeMediaQuery.addListener((e) => {
-                updateParticleColor(e.matches);
-            });
-            updateParticleColor(darkModeMediaQuery.matches);
-
-            // Data for projects and blog posts
-            const data = {
-                projects: [
-                    {
-                        url: "https://yuuniji.github.io/fitplan/",
-                        label: {
-                            zh: "项目03 - 每周徒手增肌计划",
-                            en: "Project 03 - Weekly Bodyweight Workout Plan",
-                            ja: "プロジェクト03 - 毎週の自重筋トレ計画"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/smart-tooltip/",
-                        label: {
-                            zh: "项目02 - 智能定位的注释系统",
-                            en: "Project 02 - Smart Tooltip System with Intelligent Positioning",
-                            ja: "プロジェクト02 - インテリジェント位置決め付きツールチップシステム"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/",
-                        label: {
-                            zh: "项目01 - 个人博客网站",
-                            en: "Project 01 - Personal Blog Website",
-                            ja: "プロジェクト01 - 個人ブログサイト"
-                        }
-                    }
-                ],
-                blog: [
-                    {
-                        url: "https://yuuniji.github.io/posts/reading-0-overview/",
-                        label: {
-                            zh: "文章10 - 《阅读日志》系列",
-                            en: "Post 10 - 'BookLog' Series",
-                            ja: "記事10 - 『読書ログ』シリーズ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-kubernetes/",
-                        label: {
-                            zh: "文章09 - Kubernetes 路线图",
-                            en: "Post 09 - Kubernetes Roadmap",
-                            ja: "記事09 - Kubernetesのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-docker/",
-                        label: {
-                            zh: "文章08 - Docker 路线图",
-                            en: "Post 08 - Docker Roadmap",
-                            ja: "記事08 - Dockerのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-terraform/",
-                        label: {
-                            zh: "文章07 - Terraform 路线图",
-                            en: "Post 07 - Terraform Roadmap",
-                            ja: "記事07 - Terraformのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-git-github/",
-                        label: {
-                            zh: "文章06 - Git 和 GitHub 路线图",
-                            en: "Post 06 - Git and GitHub Roadmap",
-                            ja: "記事06 - GitとGitHubのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-go/",
-                        label: {
-                            zh: "文章05 - Go 路线图",
-                            en: "Post 05 - Go Roadmap",
-                            ja: "記事05 - Goのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/roadmap-devops/",
-                        label: {
-                            zh: "文章04 - DevOps 路线图",
-                            en: "Post 04 - DevOps Roadmap",
-                            ja: "記事04 - DevOpsのロードマップ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/python-0-overview/",
-                        label: {
-                            zh: "文章03 - 《如何学好Python》系列",
-                            en: "Post 03 - 'How to Learn Python Effectively' Series",
-                            ja: "記事03 - 『Pythonを上手に学ぶ方法』シリーズ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/",
-                        label: {
-                            zh: "文章02 - 《如何学好日语》系列",
-                            en: "Post 02 - 'How to Learn Japanese Effectively' Series",
-                            ja: "記事02 - 『日本語を上手に学ぶ方法』シリーズ"
-                        }
-                    },
-                    {
-                        url: "https://yuuniji.github.io/posts/my-first-post/",
-                        label: {
-                            zh: "文章01 - 我的博客搭建",
-                            en: "Post 01 - Building My Blog",
-                            ja: "記事01 - 私のブログ構築"
-                        }
-                    }
-                ]
-            };
-
-            // Translations for static text (title and headings)
-            const translations = {
-                zh: {
-                    title: "叶泽伟的作品集",
-                    projectsHeading: "项目",
-                    blogHeading: "博客"
-                },
-                en: {
-                    title: "yuuniji's Portfolio",
-                    projectsHeading: "Projects",
-                    blogHeading: "Blog"
-                },
-                ja: {
-                    title: "葉澤偉のポートフォリオ",
-                    projectsHeading: "プロジェクト",
-                    blogHeading: "ブログ"
-                }
-            };
-
-            // Function to render the content based on language
-            function renderContent(lang) {
-                const content = translations[lang];
-
-                // Update page title
-                document.title = content.title;
-                // Terminal title栏显示（带光标）
-                const titleEl = document.getElementById('title');
-                titleEl.setAttribute('title', content.title);
-                titleEl.innerHTML = `${content.title}<span class="terminal-cursor">▋</span>`;
-
-                // 渲染终端历史
-                renderTerminalHistory(lang);
-            }
-
-            // 仿终端命令历史逻辑
-            // 全局变量用于终止动画
-            let terminalHistoryTimer = null;
-            function renderTerminalHistory(lang) {
-                const historyEl = document.getElementById('terminal-history');
-                historyEl.innerHTML = '';
-                if (terminalHistoryTimer) {
-                    clearTimeout(terminalHistoryTimer);
-                    terminalHistoryTimer = null;
-                }
-                const dirNames = {
-                    zh: { project: '项目', blog: '博客' },
-                    en: { project: 'Projects', blog: 'Blog' },
-                    ja: { project: 'プロジェクト', blog: 'ブログ' }
-                };
-                const dirs = dirNames[lang];
-                const prompt = '<span class="term-prompt">➜ ~ %</span>';
-                const promptProjects = `<span class="term-prompt">➜ ${dirs.project} %</span>`;
-                const promptBlog = `<span class="term-prompt">➜ ${dirs.blog} %</span>`;
-
-                // 历史步骤
-                const steps = [
-                    { type: 'cmd', prompt, cmd: 'ls' },
-                    { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank">${dirs.blog}</a>` },
-                    { type: 'cmd', prompt, cmd: `cd ~/${dirs.project} && ls` },
-                    { type: 'output', output: data.projects.map(prj => `<a href="${prj.url}" target="_blank">${prj.label[lang]}</a>`).join('<br>') },
-                    { type: 'cmd', prompt, cmd: `cd ~/${dirs.blog} && ls` },
-                    { type: 'output', output: data.blog.map(blog => `<a href="${blog.url}" target="_blank">${blog.label[lang]}</a>`).join('<br>') }
-                ];
-
-                let i = 0;
-                function typeCommand(row, prompt, cmd, cb) {
-                    row.innerHTML = prompt + ' <span class="term-cmd"></span><span class="terminal-cursor">▋</span>';
-                    const cmdSpan = row.querySelector('.term-cmd');
-                    const cursor = row.querySelector('.terminal-cursor');
-                    let idx = 0;
-                    function typeChar() {
-                        if (idx <= cmd.length) {
-                            cmdSpan.textContent = cmd.slice(0, idx);
-                            cursor.style.display = 'inline-block';
-                            historyEl.scrollTop = historyEl.scrollHeight;
-                            idx++;
-                            terminalHistoryTimer = setTimeout(typeChar, 17); // 更快的打字速度
-                        } else {
-                            if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor); // 移除光标
-                            if (cb) cb();
-                        }
-                    }
-                    typeChar();
-                }
-
-                function nextStep() {
-                    if (i >= steps.length) return;
-                    const s = steps[i];
-                    let row = document.createElement('div');
-                    row.className = 'term-row';
-                    if (s.type === 'cmd') {
-                        // 打字效果
-                        historyEl.appendChild(row);
-                        typeCommand(row, s.prompt, s.cmd, function () {
-                            i++;
-                            terminalHistoryTimer = setTimeout(nextStep, 120);
-                        });
-                    } else {
-                        row.innerHTML = `<div class="term-output">${s.output}</div>`;
-                        historyEl.appendChild(row);
-                        historyEl.scrollTop = historyEl.scrollHeight;
-                        i++;
-                        terminalHistoryTimer = setTimeout(nextStep, 420);
-                    }
-                }
-                nextStep();
-            }
-
-            // 星期翻译
-            const weekdays = {
-                zh: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                ja: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
-            };
-
-            // 更新时钟
-            function updateClock(lang) {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const weekday = weekdays[lang][now.getDay()];
-                const clockEl = document.getElementById('clock');
-                clockEl.textContent = `${hours}:${minutes} ${weekday}`;
-            }
-
-            // 初始化时钟并设置定时器
-            let currentLang = 'zh';
-            updateClock(currentLang);
-            setInterval(() => updateClock(currentLang), 60000); // 每分钟更新一次
-
-            // 修改语言切换函数
-            function changeLanguage(lang) {
-                currentLang = lang;
-                renderContent(lang);
-                updateClock(lang);
-            }
-
-            // Initialize with Chinese as default
-            renderContent('zh');
-        </script>
     </div>
+    <div class="nav-hint" id="nav-hint" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // 初始化粒子动画
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#27c93f'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#27c93f',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 根据系统主题切换粒子颜色
+        function updateParticleColor(isDark) {
+            const color = isDark ? '#27c93f' : '#27c93f';
+            const particles = window.pJSDom[0].pJS.particles;
+            particles.color.value = color;
+            particles.line_linked.color = color;
+            window.pJSDom[0].pJS.fn.particlesRefresh();
+        }
+
+        // 监听系统主题变化
+        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        darkModeMediaQuery.addListener((e) => {
+            updateParticleColor(e.matches);
+        });
+        updateParticleColor(darkModeMediaQuery.matches);
+
+        // Data for projects and blog posts
+        const data = {
+            projects: [
+                {
+                    url: "https://yuuniji.github.io/fitplan/",
+                    label: {
+                        zh: "项目03 - 每周徒手增肌计划",
+                        en: "Project 03 - Weekly Bodyweight Workout Plan",
+                        ja: "プロジェクト03 - 毎週の自重筋トレ計画"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/smart-tooltip/",
+                    label: {
+                        zh: "项目02 - 智能定位的注释系统",
+                        en: "Project 02 - Smart Tooltip System with Intelligent Positioning",
+                        ja: "プロジェクト02 - インテリジェント位置決め付きツールチップシステム"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/",
+                    label: {
+                        zh: "项目01 - 个人博客网站",
+                        en: "Project 01 - Personal Blog Website",
+                        ja: "プロジェクト01 - 個人ブログサイト"
+                    }
+                }
+            ],
+            blog: [
+                {
+                    url: "https://yuuniji.github.io/posts/reading-0-overview/",
+                    label: {
+                        zh: "文章10 - 《阅读日志》系列",
+                        en: "Post 10 - 'BookLog' Series",
+                        ja: "記事10 - 『読書ログ』シリーズ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-kubernetes/",
+                    label: {
+                        zh: "文章09 - Kubernetes 路线图",
+                        en: "Post 09 - Kubernetes Roadmap",
+                        ja: "記事09 - Kubernetesのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-docker/",
+                    label: {
+                        zh: "文章08 - Docker 路线图",
+                        en: "Post 08 - Docker Roadmap",
+                        ja: "記事08 - Dockerのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-terraform/",
+                    label: {
+                        zh: "文章07 - Terraform 路线图",
+                        en: "Post 07 - Terraform Roadmap",
+                        ja: "記事07 - Terraformのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-git-github/",
+                    label: {
+                        zh: "文章06 - Git 和 GitHub 路线图",
+                        en: "Post 06 - Git and GitHub Roadmap",
+                        ja: "記事06 - GitとGitHubのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-go/",
+                    label: {
+                        zh: "文章05 - Go 路线图",
+                        en: "Post 05 - Go Roadmap",
+                        ja: "記事05 - Goのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/roadmap-devops/",
+                    label: {
+                        zh: "文章04 - DevOps 路线图",
+                        en: "Post 04 - DevOps Roadmap",
+                        ja: "記事04 - DevOpsのロードマップ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/python-0-overview/",
+                    label: {
+                        zh: "文章03 - 《如何学好Python》系列",
+                        en: "Post 03 - 'How to Learn Python Effectively' Series",
+                        ja: "記事03 - 『Pythonを上手に学ぶ方法』シリーズ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/",
+                    label: {
+                        zh: "文章02 - 《如何学好日语》系列",
+                        en: "Post 02 - 'How to Learn Japanese Effectively' Series",
+                        ja: "記事02 - 『日本語を上手に学ぶ方法』シリーズ"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/posts/my-first-post/",
+                    label: {
+                        zh: "文章01 - 我的博客搭建",
+                        en: "Post 01 - Building My Blog",
+                        ja: "記事01 - 私のブログ構築"
+                    }
+                }
+            ]
+        };
+
+        // Translations for static text (title and headings)
+        const translations = {
+            zh: {
+                title: "叶泽伟的作品集",
+                projectsHeading: "项目",
+                blogHeading: "博客"
+            },
+            en: {
+                title: "yuuniji's Portfolio",
+                projectsHeading: "Projects",
+                blogHeading: "Blog"
+            },
+            ja: {
+                title: "葉澤偉のポートフォリオ",
+                projectsHeading: "プロジェクト",
+                blogHeading: "ブログ"
+            }
+        };
+
+        // Function to render the content based on language
+        function renderContent(lang) {
+            const content = translations[lang];
+
+            // Update page title
+            document.title = content.title;
+            // Terminal title栏显示（带光标）
+            const titleEl = document.getElementById('title');
+            titleEl.setAttribute('title', content.title);
+            titleEl.innerHTML = `${content.title}<span class="terminal-cursor">▋</span>`;
+
+            // 渲染终端历史
+            renderTerminalHistory(lang);
+        }
+
+        // 仿终端命令历史逻辑
+        // 全局变量用于终止动画
+        let terminalHistoryTimer = null;
+        function renderTerminalHistory(lang) {
+            const historyEl = document.getElementById('terminal-history');
+            historyEl.innerHTML = '';
+            if (terminalHistoryTimer) {
+                clearTimeout(terminalHistoryTimer);
+                terminalHistoryTimer = null;
+            }
+            const dirNames = {
+                zh: { project: '项目', blog: '博客' },
+                en: { project: 'Projects', blog: 'Blog' },
+                ja: { project: 'プロジェクト', blog: 'ブログ' }
+            };
+            const dirs = dirNames[lang];
+            const prompt = '<span class="term-prompt" aria-hidden="true">➜ ~ %</span>';
+            const promptProjects = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.project} %</span>`;
+            const promptBlog = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.blog} %</span>`;
+
+            // 历史步骤
+            const steps = [
+                { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
+                { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage">${dirs.blog}</a>` },
+                { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
+                { type: 'output', output: data.projects.map((prj, index) => `<a href="${prj.url}" target="_blank" aria-label="${prj.label[lang]}">${prj.label[lang]}</a>`).join('<br>') },
+                { type: 'cmd', prompt: promptBlog, cmd: `cd ~/${dirs.blog} && ls`, ariaLabel: `Change to ${dirs.blog} directory and list contents` },
+                { type: 'output', output: data.blog.map((blog, index) => `<a href="${blog.url}" target="_blank" aria-label="${blog.label[lang]}">${blog.label[lang]}</a>`).join('<br>') }
+            ];
+
+            let i = 0;
+            function typeCommand(row, prompt, cmd, ariaLabel, cb) {
+                row.innerHTML = prompt + ' <span class="term-cmd" aria-label="' + ariaLabel + '"></span><span class="terminal-cursor" aria-hidden="true">▋</span>';
+                const cmdSpan = row.querySelector('.term-cmd');
+                const cursor = row.querySelector('.terminal-cursor');
+                let idx = 0;
+                function typeChar() {
+                    if (idx <= cmd.length) {
+                        cmdSpan.textContent = cmd.slice(0, idx);
+                        cursor.style.display = 'inline-block';
+                        historyEl.scrollTop = historyEl.scrollHeight;
+                        idx++;
+                        terminalHistoryTimer = setTimeout(typeChar, 17);
+                    } else {
+                        if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor);
+                        if (cb) cb();
+                    }
+                }
+                typeChar();
+            }
+
+            function nextStep() {
+                if (i >= steps.length) return;
+                const s = steps[i];
+                let row = document.createElement('div');
+                row.className = 'term-row';
+                if (s.type === 'cmd') {
+                    historyEl.appendChild(row);
+                    typeCommand(row, s.prompt, s.cmd, s.ariaLabel, function () {
+                        i++;
+                        terminalHistoryTimer = setTimeout(nextStep, 120);
+                    });
+                } else {
+                    row.innerHTML = `<div class="term-output" role="list">${s.output}</div>`;
+                    historyEl.appendChild(row);
+                    historyEl.scrollTop = historyEl.scrollHeight;
+                    i++;
+                    terminalHistoryTimer = setTimeout(nextStep, 420);
+                }
+            }
+            nextStep();
+        }
+
+        // 星期翻译
+        const weekdays = {
+            zh: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            ja: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日']
+        };
+
+        // 更新时钟
+        function updateClock(lang) {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const weekday = weekdays[lang][now.getDay()];
+            const clockEl = document.getElementById('clock');
+            clockEl.textContent = `${hours}:${minutes} ${weekday}`;
+        }
+
+        // 初始化时钟并设置定时器
+        let currentLang = 'zh';
+        updateClock(currentLang);
+        setInterval(() => updateClock(currentLang), 60000); // 每分钟更新一次
+
+        // 修改导航提示的翻译
+        const navHints = {
+            zh: {
+                hint: "提示：使用 Tab 键在元素间导航，使用方向键上下选择项目，回车键确认"
+            },
+            en: {
+                hint: "Tip: Use Tab key to navigate between elements, use arrow keys to select items, press Enter to confirm"
+            },
+            ja: {
+                hint: "ヒント：Tabキーで要素間を移動、矢印キーで項目を選択、Enterキーで確定"
+            }
+        };
+
+        // 修改语言切换函数
+        function changeLanguage(lang) {
+            currentLang = lang;
+            // 保存语言选择到 localStorage
+            localStorage.setItem('preferredLanguage', lang);
+            renderContent(lang);
+            updateClock(lang);
+            updateNavHint(lang);
+        }
+
+        // 添加更新导航提示的函数
+        function updateNavHint(lang) {
+            const hintEl = document.getElementById('nav-hint');
+            hintEl.textContent = navHints[lang].hint;
+            hintEl.classList.add('visible');
+            
+            // 5秒后隐藏提示
+            setTimeout(() => {
+                hintEl.classList.remove('visible');
+            }, 5000);
+        }
+
+        // 初始化
+        function init() {
+            // 获取浏览器语言
+            const browserLang = navigator.language || navigator.userLanguage;
+            // 从 localStorage 获取保存的语言设置
+            const savedLang = localStorage.getItem('preferredLanguage');
+            
+            // 语言映射表（将浏览器语言代码映射到我们的支持的语言）
+            const langMap = {
+                'zh': 'zh',
+                'zh-CN': 'zh',
+                'zh-TW': 'zh',
+                'zh-HK': 'zh',
+                'en': 'en',
+                'en-US': 'en',
+                'en-GB': 'en',
+                'ja': 'ja',
+                'ja-JP': 'ja'
+            };
+            
+            // 获取浏览器语言的基础代码（例如 'zh-CN' -> 'zh'）
+            const baseLang = browserLang.split('-')[0];
+            
+            // 确定初始语言
+            let initialLang;
+            if (savedLang) {
+                // 如果有保存的语言设置，使用保存的设置
+                initialLang = savedLang;
+            } else if (langMap[browserLang]) {
+                // 如果浏览器语言完全匹配，使用该语言
+                initialLang = langMap[browserLang];
+            } else if (langMap[baseLang]) {
+                // 如果浏览器语言的基础代码匹配，使用该语言
+                initialLang = langMap[baseLang];
+            } else {
+                // 默认使用中文
+                initialLang = 'zh';
+            }
+            
+            // 设置初始语言
+            currentLang = initialLang;
+            renderContent(initialLang);
+            updateNavHint(initialLang);
+            
+            let currentFocusIndex = -1;
+            const focusableElements = document.querySelectorAll('a, button');
+            
+            // 添加键盘事件监听
+            document.addEventListener('keydown', function(e) {
+                // 显示导航提示
+                const hintEl = document.getElementById('nav-hint');
+                hintEl.classList.add('visible');
+                
+                // 重置隐藏计时器
+                clearTimeout(hintEl.hideTimer);
+                hintEl.hideTimer = setTimeout(() => {
+                    hintEl.classList.remove('visible');
+                }, 5000);
+
+                // Tab 键导航
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const currentIndex = Array.from(focusableElements).indexOf(document.activeElement);
+                    let nextIndex;
+
+                    if (e.shiftKey) {
+                        nextIndex = currentIndex > 0 ? currentIndex - 1 : focusableElements.length - 1;
+                    } else {
+                        nextIndex = currentIndex < focusableElements.length - 1 ? currentIndex + 1 : 0;
+                    }
+
+                    focusableElements[nextIndex].focus();
+                    currentFocusIndex = nextIndex;
+                }
+
+                // 方向键导航
+                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const links = document.querySelectorAll('.term-output a');
+                    
+                    if (links.length === 0) return;
+
+                    if (currentFocusIndex === -1) {
+                        currentFocusIndex = e.key === 'ArrowDown' ? 0 : links.length - 1;
+                    } else {
+                        if (e.key === 'ArrowUp') {
+                            currentFocusIndex = currentFocusIndex > 0 ? currentFocusIndex - 1 : links.length - 1;
+                        } else {
+                            currentFocusIndex = currentFocusIndex < links.length - 1 ? currentFocusIndex + 1 : 0;
+                        }
+                    }
+
+                    links[currentFocusIndex].focus();
+                }
+
+                // 回车键确认
+                if (e.key === 'Enter' && document.activeElement.tagName === 'A') {
+                    document.activeElement.click();
+                }
+
+                // 数字键快速导航（仅当项目数量小于等于9个时）
+                if (e.key >= '1' && e.key <= '9') {
+                    const num = parseInt(e.key);
+                    const links = document.querySelectorAll('.term-output a');
+                    if (num <= links.length && links.length <= 9) {
+                        links[num - 1].focus();
+                        links[num - 1].click();
+                    }
+                }
+            });
+        }
+
+        // 初始化
+        init();
+    </script>
 </body>
 
 </html>
