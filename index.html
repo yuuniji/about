@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>叶泽伟的作品集</title>
     <style>
+        /* ===== Base Styles ===== */
         body {
-            /* font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace; */
             font-family: Menlo, Monaco, 'Courier New', monospace;
             margin: 0;
             padding: 0;
@@ -25,6 +25,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* ===== Particles Background ===== */
         #particles-js {
             position: fixed;
             top: 0;
@@ -35,6 +36,7 @@
             pointer-events: none;
         }
 
+        /* ===== Language Switcher ===== */
         .lang-switcher {
             position: fixed;
             top: 18px;
@@ -59,6 +61,7 @@
             text-decoration: none;
         }
 
+        /* ===== Terminal Window ===== */
         .terminal-window {
             position: relative;
             z-index: 2;
@@ -74,7 +77,7 @@
                 0 0 0 1px rgba(0, 0, 0, 0.05);
             max-width: 800px;
             width: 95vw;
-            margin: 48px auto 24px auto;
+            margin: 20px auto;
             overflow: hidden;
             border: 1.5px solid rgba(224, 227, 231, 0.8);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -83,32 +86,13 @@
             transform: translateY(0);
             will-change: transform, opacity;
             animation: terminalAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+            min-height: 300px;
         }
 
-        /* Safari 特定的样式修复 */
-        @supports (-webkit-touch-callout: none) {
-            .terminal-window {
-                background: rgba(255, 255, 255, 0.98);
-            }
-            
-            @media (prefers-color-scheme: dark) {
-                .terminal-window {
-                    background: rgba(24, 24, 24, 0.98);
-                }
-            }
-        }
-
-        @keyframes terminalAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* ===== Terminal Bar ===== */
         .terminal-bar {
             background: #f5f7fa;
             height: 36px;
@@ -153,26 +137,38 @@
             margin-right: 0;
         }
 
-        .mac-close {
-            background: #ff5f56;
-        }
-
-        .mac-min {
-            background: #ffbd2e;
-        }
-
-        .mac-max {
+        .mac-close { background: #ff5f56; }
+        .mac-min { background: #ffbd2e; }
+        .mac-max { 
             background: #27c93f;
             margin-right: 0;
         }
 
+        /* ===== Terminal Content ===== */
         .terminal-content {
             padding: 32px 30px 28px 30px;
-            min-height: 400px;
             position: relative;
             transition: padding 0.3s;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            flex-grow: 1;
         }
 
+        .terminal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .terminal-content::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        /* ===== Terminal Title ===== */
         .terminal-title {
             position: absolute;
             left: 50%;
@@ -196,6 +192,7 @@
             padding: 0 8px;
         }
 
+        /* ===== Clock ===== */
         .clock {
             position: absolute;
             right: 18px;
@@ -207,6 +204,198 @@
             z-index: 3;
         }
 
+        /* ===== Terminal Cursor ===== */
+        .terminal-cursor {
+            display: inline-block;
+            width: 0.85em;
+            height: 1.1em;
+            background: none;
+            color: #27c93f;
+            font-weight: bold;
+            font-size: 1em;
+            animation: blink 1s steps(1) infinite;
+            vertical-align: middle;
+            transition: color 0.3s;
+            will-change: opacity;
+        }
+
+        /* ===== Terminal History ===== */
+        .terminal-history {
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+            font-size: 15px;
+            color: #e3e5e8;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-height: 220px;
+            line-height: 1.6;
+            letter-spacing: 0.01em;
+            overflow-y: visible;
+        }
+
+        .term-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2px;
+            word-break: break-all;
+            opacity: 0;
+            transform: translateY(10px);
+            will-change: transform, opacity;
+            animation: rowAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .term-prompt {
+            color: #27c93f;
+            font-weight: bold;
+            margin-right: 7px;
+            flex-shrink: 0;
+            user-select: none;
+            transition: color 0.3s;
+        }
+
+        .term-cmd {
+            color: #e3e5e8;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .term-output {
+            color: #0056b3;
+            margin-left: 28px;
+            white-space: pre-line;
+            word-break: break-all;
+            transition: color 0.3s, margin 0.3s;
+        }
+
+        .term-output a {
+            color: #0056b3;
+            text-decoration: underline;
+            margin-right: 18px;
+            font-size: 15px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 2px 4px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .term-output a::before {
+            content: attr(data-index);
+            position: absolute;
+            left: -20px;
+            color: #666;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .term-output a:hover::before,
+        .term-output a:focus::before {
+            opacity: 1;
+        }
+
+        /* ===== Navigation Hint ===== */
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1000;
+            will-change: opacity;
+        }
+
+        .nav-hint.visible {
+            opacity: 1;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes terminalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes rowAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Dark Mode Styles ===== */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #23272e;
+                color: #e3e5e8;
+            }
+
+            .terminal-window {
+                background: rgba(24, 24, 24, 0.95);
+                box-shadow: 
+                    0 2px 4px rgba(0, 0, 0, 0.1),
+                    0 4px 8px rgba(0, 0, 0, 0.1),
+                    0 8px 16px rgba(0, 0, 0, 0.1),
+                    0 16px 32px rgba(0, 0, 0, 0.1),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+                border: 1.5px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .terminal-bar {
+                background: #1a1a1a;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .terminal-title {
+                color: #e3e5e8;
+            }
+
+            .lang-switcher button {
+                color: #bdbdbd;
+            }
+
+            .lang-switcher button:hover {
+                color: #fff;
+            }
+
+            .clock {
+                color: #bdbdbd;
+            }
+
+            .terminal-content::-webkit-scrollbar-thumb {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .term-output a::before {
+                color: #bdbdbd;
+            }
+
+            .nav-hint {
+                background: rgba(77, 171, 255, 0.1);
+                color: #4dabff;
+                border-color: rgba(77, 171, 255, 0.2);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* ===== Responsive Styles ===== */
         @media (max-width: 900px) {
             .terminal-title {
                 font-size: 15px;
@@ -238,7 +427,6 @@
 
             .terminal-content {
                 padding: 16px 12px;
-                min-height: 100px;
             }
 
             .terminal-bar {
@@ -263,6 +451,17 @@
             .clock {
                 right: 12px;
                 font-size: 11px;
+            }
+
+            .term-output a::before {
+                left: -16px;
+                font-size: 11px;
+            }
+
+            .nav-hint {
+                font-size: 12px;
+                padding: 6px 12px;
+                bottom: 10px;
             }
         }
 
@@ -312,390 +511,16 @@
             }
         }
 
-        @media (prefers-color-scheme: dark) {
-            .clock {
-                color: #bdbdbd;
-            }
-        }
-
-        .terminal-cursor {
-            display: inline-block;
-            width: 0.85em;
-            height: 1.1em;
-            background: none;
-            color: #27c93f;
-            font-weight: bold;
-            font-size: 1em;
-            animation: blink 1s steps(1) infinite;
-            vertical-align: middle;
-            transition: color 0.3s;
-            will-change: opacity;
-        }
-
-        @keyframes blink {
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .underline {
-            border-bottom: 2px solid #e0e3e7;
-            margin: 18px auto 18px auto;
-            width: 90%;
-            transition: border-bottom 0.3s;
-        }
-
-        .content-block {
-            width: 94%;
-            margin: 0 auto;
-            text-align: left;
-            font-family: inherit;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 6px;
-            padding: 10px 12px 12px 16px;
-            box-sizing: border-box;
-            font-size: 15px;
-            letter-spacing: 0.01em;
-            border-left: 3px solid #27c93f;
-            margin-top: 12px;
-        }
-
-        h2 {
-            font-size: clamp(17px, 2.7vw, 20px);
-            font-weight: bold;
-            margin: 18px 0 6px 0;
-            color: #1a7cf7;
-            text-shadow: none;
-            transition: color 0.3s;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 0 0 0;
-        }
-
-        li {
-            font-size: clamp(13.5px, 2vw, 15px);
-            margin-bottom: 5px;
-            word-break: break-all;
-            line-height: 1.55;
-            font-family: inherit;
-            display: flex;
-            align-items: flex-start;
-            gap: 5px;
-            padding-left: 0;
-        }
-
-        .prompt {
-            color: #27c93f;
-            font-weight: bold;
-            font-family: inherit;
-            user-select: none;
-            flex-shrink: 0;
-        }
-
-        a {
-            color: #1a7cf7;
-            text-decoration: underline;
-            transition: color 0.2s;
-            font-family: inherit;
-        }
-
-        a:hover {
-            color: #23272e;
-            text-decoration: underline wavy;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
+        /* ===== Safari Specific Styles ===== */
+        @supports (-webkit-touch-callout: none) {
             .terminal-window {
-                margin: 24px auto 12px auto;
-                box-shadow: 
-                    0 2px 4px rgba(0, 0, 0, 0.02),
-                    0 4px 8px rgba(0, 0, 0, 0.02),
-                    0 8px 16px rgba(0, 0, 0, 0.02);
+                background: rgba(255, 255, 255, 0.98);
             }
-
-            .terminal-content {
-                padding: 18px 7vw 18px 7vw;
-            }
-
-            h1 {
-                margin: 15px 0;
-            }
-
-            h2 {
-                margin: 16px 0 8px 0;
-            }
-
-            .content-block {
-                width: 99%;
-            }
-
-            .underline {
-                width: 98%;
-                margin: 10px auto;
-            }
-
-            .lang-switcher {
-                top: 8px;
-                right: 8vw;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .terminal-content {
-                padding: 10px 2vw 10px 2vw;
-            }
-
-            .underline {
-                width: 99%;
-            }
-
-            .content-block {
-                width: 99%;
-            }
-        }
-
-        /* 跟随系统色彩模式适配终端风格 */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #23272e;
-                color: #e3e5e8;
-            }
-
-            .terminal-title {
-                color: #e3e5e8;
-                background: transparent;
-                border: none;
-            }
-
-            .lang-switcher button {
-                color: #bdbdbd;
-            }
-
-            .lang-switcher button:hover {
-                color: #fff;
-            }
-
-            .terminal-window {
-                background: rgba(24, 24, 24, 0.95);
-                box-shadow: 
-                    0 2px 4px rgba(0, 0, 0, 0.1),
-                    0 4px 8px rgba(0, 0, 0, 0.1),
-                    0 8px 16px rgba(0, 0, 0, 0.1),
-                    0 16px 32px rgba(0, 0, 0, 0.1),
-                    0 0 0 1px rgba(255, 255, 255, 0.05);
-                border: 1.5px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .terminal-bar {
-                background: #1a1a1a;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            h1 {
-                color: #e3e5e8;
-                text-shadow: 0 1px 0 #23272e;
-            }
-
-            .underline {
-                border-bottom: 2px solid #444c56;
-            }
-
-            h2 {
-                color: #aad7fe;
-                text-shadow: 0 1px 0 #23272e;
-            }
-
-            a {
-                color: #7ecfff;
-            }
-
-            a:hover {
-                color: #fff;
-            }
-
-            .clock {
-                color: #bdbdbd;
-            }
-        }
-
-        /* 仿终端历史样式 */
-        .terminal-history {
-            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
-            font-size: 15px;
-            color: #e3e5e8;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            min-height: 220px;
-            line-height: 1.6;
-            letter-spacing: 0.01em;
-        }
-
-        .term-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 2px;
-            word-break: break-all;
-            opacity: 0;
-            transform: translateY(10px);
-            will-change: transform, opacity;
-            animation: rowAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes rowAppear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .term-prompt {
-            color: #27c93f;
-            font-weight: bold;
-            margin-right: 7px;
-            flex-shrink: 0;
-            user-select: none;
-            transition: color 0.3s;
-        }
-
-        .term-cmd {
-            color: #23272e;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .term-output {
-            color: #0056b3;
-            margin-left: 28px;
-            white-space: pre-line;
-            word-break: break-all;
-            transition: color 0.3s, margin 0.3s;
-        }
-
-        .term-output a {
-            color: #0056b3;
-            text-decoration: underline;
-            margin-right: 18px;
-            font-size: 15px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            padding: 2px 4px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        .term-output a::before {
-            content: attr(data-index);
-            position: absolute;
-            left: -20px;
-            color: #666;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .term-output a:hover::before,
-        .term-output a:focus::before {
-            opacity: 1;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .term-output a::before {
-                color: #bdbdbd;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .term-output a::before {
-                left: -16px;
-                font-size: 11px;
-            }
-        }
-
-        @media (prefers-color-scheme: light) {
-            .terminal-history {
-                color: #23272e;
-            }
-
-            .term-cmd {
-                color: #23272e;
-            }
-
-            .term-prompt {
-                color: #27c93f;
-            }
-
-            .term-output {
-                color: #1a7cf7;
-            }
-
-            .term-output a {
-                color: #1a7cf7;
-            }
-        }
-
-        /* 增强键盘导航焦点状态 */
-        a:focus, button:focus {
-            outline: 3px solid #1a7cf7;
-            outline-offset: 2px;
-            background-color: rgba(26, 124, 247, 0.1);
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            a:focus, button:focus {
-                outline-color: #4dabff;
-                background-color: rgba(77, 171, 255, 0.2);
-            }
-        }
-
-        /* 修改导航提示样式 */
-        .nav-hint {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            z-index: 1000;
-            will-change: opacity;
-        }
-
-        .nav-hint.visible {
-            opacity: 1;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .nav-hint {
-                background: rgba(77, 171, 255, 0.1);
-                color: #4dabff;
-                border-color: rgba(77, 171, 255, 0.2);
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .nav-hint {
-                font-size: 12px;
-                padding: 6px 12px;
-                bottom: 10px;
+            
+            @media (prefers-color-scheme: dark) {
+                .terminal-window {
+                    background: rgba(24, 24, 24, 0.98);
+                }
             }
         }
     </style>
