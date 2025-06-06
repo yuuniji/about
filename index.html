@@ -40,7 +40,7 @@
         .lang-switcher {
             position: fixed;
             top: 18px;
-            right: 32px;
+            left: 32px;
             z-index: 10;
         }
 
@@ -75,7 +75,7 @@
                 0 8px 16px rgba(0, 0, 0, 0.02),
                 0 16px 32px rgba(0, 0, 0, 0.02),
                 0 0 0 1px rgba(0, 0, 0, 0.05);
-            max-width: 800px;
+            max-width: 1250px;
             width: 95vw;
             margin: 20px auto;
             overflow: hidden;
@@ -234,32 +234,63 @@
         }
         /* ===== Responsive Link List (Projects/Blog) ===== */
         .link-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px 32px;
+            display: table;
+            width: 100%;
+            table-layout: fixed;
             margin: 10px 0 18px 0;
         }
-        @media (max-width: 700px) {
-            .link-list {
-                grid-template-columns: 1fr;
-                gap: 8px 0;
-            }
+        .link-row {
+            display: table-row;
+        }
+        .link-item {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding-right: 16px;
         }
         .link-item a {
             display: block;
             width: 100%;
+            box-sizing: border-box;
             word-break: break-all;
+        }
+        @media (max-width: 700px) {
+            .link-list {
+                display: block;
+            }
+            .link-row {
+                display: block;
+            }
+            .link-item {
+                display: block;
+                width: 100%;
+                padding-right: 0;
+            }
         }
 
         .term-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 2px;
+            margin-bottom: 8px;
+            padding: 2px 0;
             word-break: break-all;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(16px);
             will-change: transform, opacity;
-            animation: rowAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: rowAppear 0.5s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards;
+            transition: background 0.2s;
+            border-radius: 4px;
+        }
+        .term-row:focus-within, .term-row:focus {
+            background: rgba(77, 171, 255, 0.08);
+            outline: 1.5px solid #4dabff;
+        }
+        @media (max-width: 600px) {
+            .term-row {
+                margin-bottom: 4px;
+                font-size: 14px;
+                padding: 1px 0;
+            }
         }
 
         .term-prompt {
@@ -419,14 +450,23 @@
 
         /* ===== Responsive Styles ===== */
         @media (max-width: 900px) {
+            .terminal-window {
+                max-width: 98vw;
+                width: 98vw;
+                margin: 12px auto;
+                border-radius: 10px;
+            }
             .terminal-title {
                 font-size: 15px;
             }
             .clock {
                 font-size: 13px;
             }
+            .lang-switcher {
+                top: 10px;
+                left: 10px;
+            }
         }
-
         @media (max-width: 768px) {
             .terminal-title {
                 font-size: 15px;
@@ -439,94 +479,87 @@
                 font-size: 12px;
             }
         }
-
         @media (max-width: 600px) {
             .terminal-window {
-                margin: 12px auto;
-                width: 98vw;
+                margin: 8px auto;
+                width: 99vw;
                 border-radius: 8px;
+                min-height: 220px;
+                max-height: 95vh;
             }
-
             .terminal-content {
-                padding: 16px 12px;
+                padding: 12px 4vw;
             }
-
             .terminal-bar {
-                height: 32px;
-                padding: 0 12px;
+                height: 30px;
+                padding: 0 8px;
             }
-
             .mac-btn {
-                width: 11px;
-                height: 11px;
-                margin-right: 6px;
+                width: 10px;
+                height: 10px;
+                margin-right: 4px;
             }
-
             .mac-btn-group {
-                left: 12px;
+                left: 8px;
             }
-
             .terminal-title {
-                font-size: 13.5px;
+                font-size: 13px;
             }
-
             .clock {
-                right: 12px;
+                right: 8px;
                 font-size: 11px;
             }
-
+            .lang-switcher {
+                top: 4px;
+                left: 4px;
+            }
             .term-output a::before {
                 left: -16px;
                 font-size: 11px;
             }
-
             .nav-hint {
                 font-size: 12px;
                 padding: 6px 12px;
                 bottom: 10px;
             }
         }
-
         @media (max-width: 400px) {
             .terminal-window {
-                margin: 8px auto;
-                width: 99vw;
-                border-radius: 6px;
+                margin: 4px auto;
+                width: 100vw;
+                border-radius: 5px;
             }
-
             .terminal-content {
-                padding: 12px 8px;
+                padding: 8px 2vw;
             }
-
             .terminal-bar {
-                height: 28px;
-                padding: 0 8px;
+                height: 24px;
+                padding: 0 4px;
             }
-
             .mac-btn {
-                width: 10px;
-                height: 10px;
-                margin-right: 5px;
+                width: 9px;
+                height: 9px;
+                margin-right: 3px;
             }
-
             .mac-btn-group {
-                left: 8px;
+                left: 4px;
             }
-
             .terminal-title {
-                font-size: 12px;
-            }
-
-            .clock {
-                right: 8px;
                 font-size: 10px;
+            }
+            .clock {
+                right: 4px;
+                font-size: 9px;
+            }
+            .lang-switcher {
+                top: 2px;
+                left: 2px;
             }
         }
-
         @media (max-width: 320px) {
             .terminal-title {
-                font-size: 10px;
-                max-width: calc(100% - 20px);
+                font-size: 9px;
+                max-width: calc(100% - 10px);
             }
             .clock {
                 display: none;
@@ -679,25 +712,33 @@
                 {
                     url: "https://yuuniji.github.io/fitplan/",
                     label: {
-                        zh: "项目03 - 每周徒手增肌计划",
-                        en: "Project 03 - Weekly Bodyweight Workout Plan",
-                        ja: "プロジェクト03 - 毎週の自重筋トレ計画"
+                        zh: "04 - 每周徒手增肌计划",
+                        en: "04 - Weekly Bodyweight Workout Plan",
+                        ja: "04 - 毎週の自重筋トレ計画"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/smart-tooltip/",
                     label: {
-                        zh: "项目02 - 智能定位的注释系统",
-                        en: "Project 02 - Smart Tooltip System with Intelligent Positioning",
-                        ja: "プロジェクト02 - インテリジェント位置決め付きツールチップシステム"
+                        zh: "03 - 智能定位的注释系统",
+                        en: "03 - Smart Tooltip System with Intelligent Positioning",
+                        ja: "03 - インテリジェント位置決め付きツールチップシステム"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/",
                     label: {
-                        zh: "项目01 - 个人博客网站",
-                        en: "Project 01 - Personal Blog Website",
-                        ja: "プロジェクト01 - 個人ブログサイト"
+                        zh: "02 - 个人博客网站",
+                        en: "02 - Personal Blog Website",
+                        ja: "02 - 個人ブログサイト"
+                    }
+                },
+                {
+                    url: "https://yuuniji.github.io/about/",
+                    label: {
+                        zh: "01 - 个人简介与作品集",
+                        en: "01 - About & Portfolio",
+                        ja: "01 - 自己紹介とポートフォリオ"
                     }
                 }
             ],
@@ -705,81 +746,81 @@
                 {
                     url: "https://yuuniji.github.io/posts/reading-0-overview/",
                     label: {
-                        zh: "文章10 - 《阅读日志》系列",
-                        en: "Post 10 - 'BookLog' Series",
-                        ja: "記事10 - 『読書ログ』シリーズ"
+                        zh: "10 - 《阅读日志》系列",
+                        en: "10 - 'BookLog' Series",
+                        ja: "10 - 『読書ログ』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-kubernetes/",
                     label: {
-                        zh: "文章09 - Kubernetes 路线图",
-                        en: "Post 09 - Kubernetes Roadmap",
-                        ja: "記事09 - Kubernetesのロードマップ"
+                        zh: "09 - Kubernetes 路线图",
+                        en: "09 - Kubernetes Roadmap",
+                        ja: "09 - Kubernetesのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-docker/",
                     label: {
-                        zh: "文章08 - Docker 路线图",
-                        en: "Post 08 - Docker Roadmap",
-                        ja: "記事08 - Dockerのロードマップ"
+                        zh: "08 - Docker 路线图",
+                        en: "08 - Docker Roadmap",
+                        ja: "08 - Dockerのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-terraform/",
                     label: {
-                        zh: "文章07 - Terraform 路线图",
-                        en: "Post 07 - Terraform Roadmap",
-                        ja: "記事07 - Terraformのロードマップ"
+                        zh: "07 - Terraform 路线图",
+                        en: "07 - Terraform Roadmap",
+                        ja: "07 - Terraformのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-git-github/",
                     label: {
-                        zh: "文章06 - Git 和 GitHub 路线图",
-                        en: "Post 06 - Git and GitHub Roadmap",
-                        ja: "記事06 - GitとGitHubのロードマップ"
+                        zh: "06 - Git 和 GitHub 路线图",
+                        en: "06 - Git and GitHub Roadmap",
+                        ja: "06 - GitとGitHubのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-go/",
                     label: {
-                        zh: "文章05 - Go 路线图",
-                        en: "Post 05 - Go Roadmap",
-                        ja: "記事05 - Goのロードマップ"
+                        zh: "05 - Go 路线图",
+                        en: "05 - Go Roadmap",
+                        ja: "05 - Goのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-devops/",
                     label: {
-                        zh: "文章04 - DevOps 路线图",
-                        en: "Post 04 - DevOps Roadmap",
-                        ja: "記事04 - DevOpsのロードマップ"
+                        zh: "04 - DevOps 路线图",
+                        en: "04 - DevOps Roadmap",
+                        ja: "04 - DevOpsのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/python-0-overview/",
                     label: {
-                        zh: "文章03 - 《如何学好Python》系列",
-                        en: "Post 03 - 'How to Learn Python Effectively' Series",
-                        ja: "記事03 - 『Pythonを上手に学ぶ方法』シリーズ"
+                        zh: "03 - 《如何学好Python》系列",
+                        en: "03 - 'How to Learn Python Effectively' Series",
+                        ja: "03 - 『Pythonを上手に学ぶ方法』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/",
                     label: {
-                        zh: "文章02 - 《如何学好日语》系列",
-                        en: "Post 02 - 'How to Learn Japanese Effectively' Series",
-                        ja: "記事02 - 『日本語を上手に学ぶ方法』シリーズ"
+                        zh: "02 - 《如何学好日语》系列",
+                        en: "02 - 'How to Learn Japanese Effectively' Series",
+                        ja: "02 - 『日本語を上手に学ぶ方法』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/my-first-post/",
                     label: {
-                        zh: "文章01 - 我的博客搭建",
-                        en: "Post 01 - Building My Blog",
-                        ja: "記事01 - 私のブログ構築"
+                        zh: "01 - 我的博客搭建",
+                        en: "01 - Building My Blog",
+                        ja: "01 - 私のブログ構築"
                     }
                 }
             ]
@@ -847,9 +888,21 @@
                 { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
                 { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage" data-index="1">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage" data-index="2">${dirs.blog}</a>` },
                 { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
-                { type: 'output', output: `<div class=\"link-list\">` + data.projects.map((prj, index) => `<div class=\"link-item\"><a href=\"${prj.url}\" target=\"_blank\" aria-label=\"${prj.label[lang]}\" data-index=\"${index + 1}\">${prj.label[lang]}</a></div>`).join('') + `</div>` },
+                { type: 'output', output: `<div class=\"link-list\">` +
+                        data.projects.reduce((acc, prj, idx, arr) => {
+                            if (idx % 2 === 0) acc += '<div class=\"link-row\">';
+                            acc += `<div class=\"link-item\"><a href=\"${prj.url}\" target=\"_blank\" aria-label=\"${prj.label[lang]}\" data-index=\"${idx + 1}\">${prj.label[lang]}</a></div>`;
+                            if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
+                            return acc;
+                        }, '') + `</div>` },
                 { type: 'cmd', prompt: promptBlog, cmd: `cd ~/${dirs.blog} && ls`, ariaLabel: `Change to ${dirs.blog} directory and list contents` },
-                { type: 'output', output: `<div class=\"link-list\">` + data.blog.map((blog, index) => `<div class=\"link-item\"><a href=\"${blog.url}\" target=\"_blank\" aria-label=\"${blog.label[lang]}\" data-index=\"${index + 1}\">${blog.label[lang]}</a></div>`).join('') + `</div>` }
+                { type: 'output', output: `<div class=\"link-list\">` +
+                        data.blog.reduce((acc, blog, idx, arr) => {
+                            if (idx % 2 === 0) acc += '<div class=\"link-row\">';
+                            acc += `<div class=\"link-item\"><a href=\"${blog.url}\" target=\"_blank\" aria-label=\"${blog.label[lang]}\" data-index=\"${idx + 1}\">${blog.label[lang]}</a></div>`;
+                            if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
+                            return acc;
+                        }, '') + `</div>` }
             ];
 
             if (fallbackMode) {
