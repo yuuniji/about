@@ -69,7 +69,7 @@
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border-radius: 12px;
-            box-shadow: 
+            box-shadow:
                 0 2px 4px rgba(0, 0, 0, 0.02),
                 0 4px 8px rgba(0, 0, 0, 0.02),
                 0 8px 16px rgba(0, 0, 0, 0.02),
@@ -81,8 +81,8 @@
             overflow: hidden;
             border: 1.5px solid rgba(224, 227, 231, 0.8);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(0);
             will-change: transform, opacity;
             animation: terminalAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -138,9 +138,15 @@
             margin-right: 0;
         }
 
-        .mac-close { background: #ff5f56; }
-        .mac-min { background: #ffbd2e; }
-        .mac-max { 
+        .mac-close {
+            background: #ff5f56;
+        }
+
+        .mac-min {
+            background: #ffbd2e;
+        }
+
+        .mac-max {
             background: #27c93f;
             margin-right: 0;
         }
@@ -154,7 +160,8 @@
             scrollbar-width: thin;
             scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
             flex-grow: 1;
-            min-height: 0; /* 关键，防止撑大父容器 */
+            min-height: 0;
+            /* 关键，防止撑大父容器 */
         }
 
         .terminal-content::-webkit-scrollbar {
@@ -234,6 +241,7 @@
             letter-spacing: 0.01em;
             overflow-y: visible;
         }
+
         /* ===== Responsive Link List (Projects/Blog) ===== */
         .link-list {
             display: table;
@@ -241,14 +249,78 @@
             table-layout: fixed;
             margin: 10px 0 18px 0;
         }
+
         .link-row {
             display: table-row;
         }
+
         .link-item {
             display: table-cell;
             width: 50%;
             vertical-align: top;
             padding-right: 16px;
+        }
+
+        .link-item {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding-right: 16px;
+        }
+        .link-item .link-flex {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .link-flex .project-link {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px 0 0 4px;
+            background: none;
+            color: #0056b3;
+            transition: background 0.15s, color 0.15s;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .link-flex .repo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8em;
+            height: 1.8em;
+            margin-left: 0;
+            color: #888;
+            background: none;
+            border-radius: 0 4px 4px 0;
+            transition: background 0.15s, color 0.15s;
+        }
+        .link-flex:hover .project-link,
+        .link-flex:focus-within .project-link,
+        .link-flex:hover .repo-link,
+        .link-flex:focus-within .repo-link {
+            background: #eaf6ff;
+            color: #23272e;
+        }
+        .link-flex .project-link:focus,
+        .link-flex .repo-link:focus {
+            background: #eaf6ff;
+            color: #23272e;
+            outline: 1.5px solid #4dabff;
+        }
+        @media (prefers-color-scheme: dark) {
+            .link-flex:hover .project-link,
+            .link-flex:focus-within .project-link,
+            .link-flex:hover .repo-link,
+            .link-flex:focus-within .repo-link {
+                background: #253040;
+                color: #e3e5e8;
+            }
+            .link-flex .project-link:focus,
+            .link-flex .repo-link:focus {
+                background: #253040;
+                color: #e3e5e8;
+                outline: 1.5px solid #4dabff;
+            }
         }
         .link-item a {
             display: block;
@@ -256,13 +328,31 @@
             box-sizing: border-box;
             word-break: break-all;
         }
+        .repo-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8em;
+            height: 1.8em;
+            margin-left: 2px;
+            color: #888;
+            background: none;
+            border-radius: 50%;
+            transition: background 0.18s, color 0.18s;
+        }
+        .repo-link:hover {
+            background: #eaf6ff;
+            color: #23272e;
+        }
         @media (max-width: 700px) {
             .link-list {
                 display: block;
             }
+
             .link-row {
                 display: block;
             }
+
             .link-item {
                 display: block;
                 width: 100%;
@@ -270,6 +360,23 @@
             }
         }
 
+        @media (max-width: 700px) {
+            .link-list {
+                display: block;
+            }
+
+            .link-row {
+                display: block;
+            }
+
+            .link-item {
+                display: block;
+                width: 100%;
+                padding-right: 0;
+            }
+        }
+
+        /* ===== Terminal Row Styles ===== */
         .term-row {
             display: flex;
             align-items: flex-start;
@@ -283,17 +390,49 @@
             transition: background 0.2s;
             border-radius: 4px;
         }
-        .term-row:focus-within, .term-row:focus {
-    background: #eaf6ff;
-    outline: 1.5px solid #4dabff;
-    box-shadow: none;
-}
 
+        /* 默认高亮（亮色） */
+        .term-row:focus-within,
+        .term-row:focus {
+            background: #eaf6ff;
+            outline: 1.5px solid #4dabff;
+            box-shadow: none;
+            transition: background 0.22s cubic-bezier(0.4,0,0.2,1), outline-color 0.22s cubic-bezier(0.4,0,0.2,1), outline-width 0.22s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* 深色模式高亮 */
+        @media (prefers-color-scheme: dark) {
+
+            .term-row:focus-within,
+            .term-row:focus {
+                background: #253040;
+                outline: 1.5px solid #4dabff;
+            }
+        }
+
+        /* 移动端适配 */
         @media (max-width: 600px) {
             .term-row {
                 margin-bottom: 4px;
                 font-size: 14px;
                 padding: 1px 0;
+            }
+
+            .term-row:focus-within,
+            .term-row:focus {
+                background: #eaf6ff;
+                outline: 1.5px solid #4dabff;
+            }
+
+            /* 移动端深色模式高亮 */
+            @media (prefers-color-scheme: dark) {
+
+                .term-row:focus-within,
+                .term-row:focus {
+                    background: #253040;
+                    outline: 1.5px solid #4dabff;
+                    transition: background 0.22s cubic-bezier(0.4,0,0.2,1), outline-color 0.22s cubic-bezier(0.4,0,0.2,1), outline-width 0.22s cubic-bezier(0.4,0,0.2,1);
+                }
             }
         }
 
@@ -321,40 +460,40 @@
         }
 
         .term-output a {
-    color: #0056b3;
-    text-decoration: none;
-    margin-right: 18px;
-    font-size: 15px;
-    position: relative;
-    padding: 2px 6px;
-    border-radius: 4px;
-    display: inline-block;
-    background: none;
-    outline: none;
-    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
-}
+            color: #0056b3;
+            text-decoration: none;
+            margin-right: 18px;
+            font-size: 15px;
+            position: relative;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            background: none;
+            outline: none;
+            transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+        }
 
-.term-output a:hover,
-.term-output a:focus {
-    background: #eaf6ff;
-    color: #23272e;
-    text-decoration: none;
-    box-shadow: 0 0 0 1.5px #4dabff;
-    outline: none;
-}
+        .term-output a:hover,
+        .term-output a:focus {
+            background: #eaf6ff;
+            color: #23272e;
+            text-decoration: none;
+            box-shadow: 0 0 0 1.5px #4dabff;
+            outline: none;
+        }
 
-.term-output a::before {
-    content: attr(data-index);
-    position: absolute;
-    left: -20px;
-    color: #666;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.15s;
-}
+        .term-output a::before {
+            content: attr(data-index);
+            position: absolute;
+            left: -20px;
+            color: #666;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
 
-.term-output a:hover::before,
-.term-output a:focus::before {
+        .term-output a:hover::before,
+        .term-output a:focus::before {
             opacity: 1;
         }
 
@@ -386,6 +525,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -393,8 +533,16 @@
         }
 
         @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
         }
 
         @keyframes rowAppear {
@@ -413,7 +561,7 @@
 
             .terminal-window {
                 background: rgba(24, 24, 24, 0.95);
-                box-shadow: 
+                box-shadow:
                     0 2px 4px rgba(0, 0, 0, 0.1),
                     0 4px 8px rgba(0, 0, 0, 0.1),
                     0 8px 16px rgba(0, 0, 0, 0.1),
@@ -450,13 +598,16 @@
             .term-output a::before {
                 color: #bdbdbd;
             }
+
             .term-output a:hover,
             .term-output a:focus {
                 background: #253040;
                 color: #e3e5e8;
                 box-shadow: 0 0 0 1.5px #4dabff;
             }
-            .term-row:focus-within, .term-row:focus {
+
+            .term-row:focus-within,
+            .term-row:focus {
                 background: #253040;
                 outline: 1.5px solid #4dabff;
             }
@@ -481,17 +632,21 @@
                 margin: 12px auto;
                 border-radius: 10px;
             }
+
             .terminal-title {
                 font-size: 15px;
             }
+
             .clock {
                 font-size: 13px;
             }
+
             .lang-switcher {
                 top: 10px;
                 left: 10px;
             }
         }
+
         @media (max-width: 768px) {
             .terminal-title {
                 font-size: 15px;
@@ -499,11 +654,13 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
             .clock {
                 right: 80px;
                 font-size: 12px;
             }
         }
+
         @media (max-width: 600px) {
             .terminal-window {
                 margin: 8px auto;
@@ -513,91 +670,113 @@
                 height: 95vh;
                 max-height: 95vh;
             }
+
             .terminal-content {
                 padding: 12px 4vw;
                 min-height: 0;
             }
+
             .terminal-bar {
                 height: 30px;
                 padding: 0 8px;
             }
+
             .mac-btn {
                 width: 10px;
                 height: 10px;
                 margin-right: 4px;
             }
+
             .mac-btn-group {
                 left: 8px;
             }
+
             .terminal-title {
                 font-size: 13px;
             }
+
             .clock {
                 right: 8px;
                 font-size: 11px;
             }
+
             .lang-switcher {
                 top: 4px;
                 left: 4px;
             }
+
             .term-output a::before {
                 left: -16px;
                 font-size: 11px;
             }
+
             .term-output a:hover,
             .term-output a:focus {
                 background: #eaf6ff;
                 color: #23272e;
                 box-shadow: 0 0 0 1.5px #4dabff;
             }
-            .term-row:focus-within, .term-row:focus {
+
+            .term-row:focus-within,
+            .term-row:focus {
                 background: #eaf6ff;
                 outline: 1.5px solid #4dabff;
             }
+
             .nav-hint {
                 font-size: 12px;
                 padding: 6px 12px;
                 bottom: 10px;
             }
         }
+
         @media (max-width: 400px) {
             .terminal-window {
                 margin: 4px auto;
                 width: 100vw;
                 border-radius: 5px;
             }
+
             .terminal-content {
                 padding: 8px 2vw;
             }
+
             .terminal-bar {
                 height: 24px;
                 padding: 0 4px;
             }
+
             .mac-btn {
                 width: 9px;
                 height: 9px;
                 margin-right: 3px;
             }
+
             .mac-btn-group {
                 left: 4px;
             }
+
             .terminal-title {
                 font-size: 10px;
             }
+
             .clock {
                 right: 4px;
                 font-size: 9px;
             }
+
             .lang-switcher {
                 top: 2px;
                 left: 2px;
             }
         }
+
         @media (max-width: 320px) {
             .terminal-title {
                 font-size: 9px;
                 max-width: calc(100% - 10px);
             }
+
             .clock {
                 display: none;
             }
@@ -608,7 +787,7 @@
             .terminal-window {
                 background: rgba(255, 255, 255, 0.98);
             }
-            
+
             @media (prefers-color-scheme: dark) {
                 .terminal-window {
                     background: rgba(24, 24, 24, 0.98);
@@ -645,11 +824,11 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-    // 全局JS错误捕获，方便调试
-    window.onerror = function(msg, url, line, col, error) {
-        alert('JS错误: ' + msg + '\n' + url + ':' + line + (col ? (':' + col) : ''));
-        return false;
-    }
+        // 全局JS错误捕获，方便调试
+        window.onerror = function (msg, url, line, col, error) {
+            alert('JS错误: ' + msg + '\n' + url + ':' + line + (col ? (':' + col) : ''));
+            return false;
+        }
     </script>
     <script>
         // 初始化粒子动画
@@ -748,34 +927,38 @@
             projects: [
                 {
                     url: "https://yuuniji.github.io/fitplan/",
+                    repo: "https://github.com/yuuniji/fitplan",
                     label: {
-                        zh: "04 - 每周徒手增肌计划",
-                        en: "04 - Weekly Bodyweight Workout Plan",
-                        ja: "04 - 毎週の自重筋トレ計画"
+                        zh: "💪 每周徒手增肌计划",
+                        en: "💪 Weekly Bodyweight Workout Plan",
+                        ja: "💪 毎週の自重筋トレ計画"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/smart-tooltip/",
+                    repo: "https://github.com/yuuniji/smart-tooltip",
                     label: {
-                        zh: "03 - 智能定位的注释系统",
-                        en: "03 - Smart Tooltip System with Intelligent Positioning",
-                        ja: "03 - インテリジェント位置決め付きツールチップシステム"
+                        zh: "💡 智能定位的注释系统",
+                        en: "💡 Smart Tooltip System with Intelligent Positioning",
+                        ja: "💡 インテリジェント位置決め付きツールチップシステム"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/",
+                    repo: "https://github.com/yuuniji/yuuniji.github.io",
                     label: {
-                        zh: "02 - 个人博客网站",
-                        en: "02 - Personal Blog Website",
-                        ja: "02 - 個人ブログサイト"
+                        zh: "🌐 个人博客网站",
+                        en: "🌐 Personal Blog Website",
+                        ja: "🌐 個人ブログサイト"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/about/",
+                    repo: "https://github.com/yuuniji/about",
                     label: {
-                        zh: "01 - 个人简介与作品集",
-                        en: "01 - About & Portfolio",
-                        ja: "01 - 自己紹介とポートフォリオ"
+                        zh: "👤 个人简介与作品集",
+                        en: "👤 About & Portfolio",
+                        ja: "👤 自己紹介とポートフォリオ"
                     }
                 }
             ],
@@ -783,81 +966,81 @@
                 {
                     url: "https://yuuniji.github.io/posts/reading-0-overview/",
                     label: {
-                        zh: "10 - 《阅读日志》系列",
-                        en: "10 - 'BookLog' Series",
-                        ja: "10 - 『読書ログ』シリーズ"
+                        zh: "📚 《阅读日志》系列",
+                        en: "📚 'BookLog' Series",
+                        ja: "📚 『読書ログ』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-kubernetes/",
                     label: {
-                        zh: "09 - Kubernetes 路线图",
-                        en: "09 - Kubernetes Roadmap",
-                        ja: "09 - Kubernetesのロードマップ"
+                        zh: "☸️ Kubernetes 路线图",
+                        en: "☸️ Kubernetes Roadmap",
+                        ja: "☸️ Kubernetesのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-docker/",
                     label: {
-                        zh: "08 - Docker 路线图",
-                        en: "08 - Docker Roadmap",
-                        ja: "08 - Dockerのロードマップ"
+                        zh: "🐳 Docker 路线图",
+                        en: "🐳 Docker Roadmap",
+                        ja: "🐳 Dockerのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-terraform/",
                     label: {
-                        zh: "07 - Terraform 路线图",
-                        en: "07 - Terraform Roadmap",
-                        ja: "07 - Terraformのロードマップ"
+                        zh: "🌱 Terraform 路线图",
+                        en: "🌱 Terraform Roadmap",
+                        ja: "🌱 Terraformのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-git-github/",
                     label: {
-                        zh: "06 - Git 和 GitHub 路线图",
-                        en: "06 - Git and GitHub Roadmap",
-                        ja: "06 - GitとGitHubのロードマップ"
+                        zh: "🔗 Git 和 GitHub 路线图",
+                        en: "🔗 Git and GitHub Roadmap",
+                        ja: "🔗 GitとGitHubのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-go/",
                     label: {
-                        zh: "05 - Go 路线图",
-                        en: "05 - Go Roadmap",
-                        ja: "05 - Goのロードマップ"
+                        zh: "🐹 Go 路线图",
+                        en: "🐹 Go Roadmap",
+                        ja: "🐹 Goのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/roadmap-devops/",
                     label: {
-                        zh: "04 - DevOps 路线图",
-                        en: "04 - DevOps Roadmap",
-                        ja: "04 - DevOpsのロードマップ"
+                        zh: "⚙️ DevOps 路线图",
+                        en: "⚙️ DevOps Roadmap",
+                        ja: "⚙️ DevOpsのロードマップ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/python-0-overview/",
                     label: {
-                        zh: "03 - 《如何学好Python》系列",
-                        en: "03 - 'How to Learn Python Effectively' Series",
-                        ja: "03 - 『Pythonを上手に学ぶ方法』シリーズ"
+                        zh: "🐍 《如何学好Python》系列",
+                        en: "🐍 'How to Learn Python Effectively' Series",
+                        ja: "🐍 『Pythonを上手に学ぶ方法』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/how-to-learn-japanese-effectively-0-overview/",
                     label: {
-                        zh: "02 - 《如何学好日语》系列",
-                        en: "02 - 'How to Learn Japanese Effectively' Series",
-                        ja: "02 - 『日本語を上手に学ぶ方法』シリーズ"
+                        zh: "🈶 《如何学好日语》系列",
+                        en: "🈶 'How to Learn Japanese Effectively' Series",
+                        ja: "🈶 『日本語を上手に学ぶ方法』シリーズ"
                     }
                 },
                 {
                     url: "https://yuuniji.github.io/posts/my-first-post/",
                     label: {
-                        zh: "01 - 我的博客搭建",
-                        en: "01 - Building My Blog",
-                        ja: "01 - 私のブログ構築"
+                        zh: "📝 我的博客搭建",
+                        en: "📝 Building My Blog",
+                        ja: "📝 私のブログ構築"
                     }
                 }
             ]
@@ -910,108 +1093,112 @@
             }
             // fallback: 若异常直接全部输出
             try {
-            const dirNames = {
-                zh: { project: '项目', blog: '博客' },
-                en: { project: 'Projects', blog: 'Blog' },
-                ja: { project: 'プロジェクト', blog: 'ブログ' }
-            };
-            const dirs = dirNames[lang];
-            const prompt = '<span class="term-prompt" aria-hidden="true">➜ ~ %</span>';
-            const promptProjects = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.project} %</span>`;
-            const promptBlog = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.blog} %</span>`;
+                const dirNames = {
+                    zh: { project: '项目', blog: '博客' },
+                    en: { project: 'Projects', blog: 'Blog' },
+                    ja: { project: 'プロジェクト', blog: 'ブログ' }
+                };
+                const dirs = dirNames[lang];
+                const prompt = '<span class="term-prompt" aria-hidden="true">➜ ~ %</span>';
+                const promptProjects = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.project} %</span>`;
+                const promptBlog = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.blog} %</span>`;
 
-            // 历史步骤
-            // 仅用人名作为版权声明内容
-        const nameText = {
-            zh: '叶泽伟',
-            en: 'Zewai Ye',
-            ja: '葉澤偉'
-        };
-        const copyrightText = {
-            zh: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.zh}</a> 版权所有`,
-            en: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.en}</a>. All rights reserved.`,
-            ja: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.ja}</a> 全著作権所有`
-        };
+                // 历史步骤
+                // 仅用人名作为版权声明内容
+                const nameText = {
+                    zh: '叶泽伟',
+                    en: 'Zewai Ye',
+                    ja: '葉澤偉'
+                };
+                const copyrightText = {
+                    zh: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.zh}</a> 版权所有`,
+                    en: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.en}</a>. All rights reserved.`,
+                    ja: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.ja}</a> 全著作権所有`
+                };
 
-        const steps = [
-                { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
-                { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage" data-index="1">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage" data-index="2">${dirs.blog}</a>` },
-                { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
-                { type: 'output', output: `<div class=\"link-list\">` +
-                        data.projects.reduce((acc, prj, idx, arr) => {
-                            if (idx % 2 === 0) acc += '<div class=\"link-row\">';
-                            acc += `<div class=\"link-item\"><a href=\"${prj.url}\" target=\"_blank\" aria-label=\"${prj.label[lang]}\" data-index=\"${idx + 1}\">${prj.label[lang]}</a></div>`;
-                            if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
-                            return acc;
-                        }, '') + `</div>` },
-                { type: 'cmd', prompt: promptBlog, cmd: `cd ~/${dirs.blog} && ls`, ariaLabel: `Change to ${dirs.blog} directory and list contents` },
-                { type: 'output', output: `<div class=\"link-list\">` +
-                        data.blog.reduce((acc, blog, idx, arr) => {
-                            if (idx % 2 === 0) acc += '<div class=\"link-row\">';
-                            acc += `<div class=\"link-item\"><a href=\"${blog.url}\" target=\"_blank\" aria-label=\"${blog.label[lang]}\" data-index=\"${idx + 1}\">${blog.label[lang]}</a></div>`;
-                            if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
-                            return acc;
-                        }, '') + `</div>` },
-                // 版权声明（多语言）
-                { type: 'output', output: `<span style=\"color:#888;opacity:0.55;font-size:13px;\">${copyrightText[lang]}</span>` }
-            ];
+                const steps = [
+                    { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
+                    { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage" data-index="1">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage" data-index="2">${dirs.blog}</a>` },
+                    { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
+                    {
+                        type: 'output', output: `<div class=\"link-list\">` +
+                            data.projects.reduce((acc, prj, idx, arr) => {
+                                if (idx % 2 === 0) acc += '<div class=\"link-row\">';
+                                acc += `<div class=\"link-item\"><span class=\"link-flex\"><a class=\"project-link\" href=\"${prj.url}\" target=\"_blank\" aria-label=\"${dirs.project}：${prj.label[lang]}，新窗口打开\" data-index=\"${idx + 1}\">${prj.label[lang]}</a><a href=\"${prj.repo}\" target=\"_blank\" class=\"repo-link\" aria-label=\"${dirs.project}：${prj.label[lang]} 的 GitHub 源码，新窗口打开\"><svg width='16' height='16' viewBox='0 0 16 16' fill='currentColor' aria-hidden='true' style='vertical-align:-0.18em;'><path d='M8 1C4.13 1 1 4.13 1 8c0 3.07 2.06 5.64 4.93 6.54.36.07.49-.16.49-.35 0-.17-.01-.73-.01-1.33-2.01.37-2.53-.49-2.69-.94-.08-.21-.42-.94-.72-1.13-.25-.17-.6-.59-.01-.6.56-.01.96.52 1.09.74.64 1.08 1.67.77 2.08.59.06-.46.25-.77.45-.95-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.26.22.48.65.48 1.31 0 .95-.01 1.71-.01 1.94 0 .19.13.42.5.35C12.94 13.64 15 11.07 15 8c0-3.87-3.13-7-7-7z'/></svg></a></span></div>`;
+                                if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
+                                return acc;
+                            }, '') + `</div>`
+                    },
+                    { type: 'cmd', prompt: promptBlog, cmd: `cd ~/${dirs.blog} && ls`, ariaLabel: `Change to ${dirs.blog} directory and list contents` },
+                    {
+                        type: 'output', output: `<div class=\"link-list\">` +
+                            data.blog.reduce((acc, blog, idx, arr) => {
+                                if (idx % 2 === 0) acc += '<div class=\"link-row\">';
+                                acc += `<div class=\"link-item\"><a href=\"${blog.url}\" target=\"_blank\" aria-label=\"${dirs.blog}：${blog.label[lang]}，新窗口打开\" data-index=\"${idx + 1}\">${blog.label[lang]}</a></div>`;
+                                if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
+                                return acc;
+                            }, '') + `</div>`
+                    },
+                    // 版权声明（多语言）
+                    { type: 'output', output: `<span style=\"color:#888;opacity:0.55;font-size:13px;\">${copyrightText[lang]}</span>` }
+                ];
 
-            if (fallbackMode) {
-                // 直接输出所有内容，无动画
-                steps.forEach(s => {
+                if (fallbackMode) {
+                    // 直接输出所有内容，无动画
+                    steps.forEach(s => {
+                        let row = document.createElement('div');
+                        row.className = 'term-row';
+                        if (s.type === 'cmd') {
+                            row.innerHTML = s.prompt + ' <span class="term-cmd">' + s.cmd + '</span>';
+                        } else {
+                            row.innerHTML = `<div class="term-output" role="list">${s.output}</div>`;
+                        }
+                        historyEl.appendChild(row);
+                    });
+                    historyEl.scrollTop = historyEl.scrollHeight;
+                    return;
+                }
+                let i = 0;
+                function typeCommand(row, prompt, cmd, ariaLabel, cb) {
+                    row.innerHTML = prompt + ' <span class="term-cmd" aria-label="' + ariaLabel + '"></span><span class="terminal-cursor" aria-hidden="true">▋</span>';
+                    const cmdSpan = row.querySelector('.term-cmd');
+                    const cursor = row.querySelector('.terminal-cursor');
+                    let idx = 0;
+                    function typeChar() {
+                        if (idx <= cmd.length) {
+                            cmdSpan.textContent = cmd.slice(0, idx);
+                            cursor.style.display = 'inline-block';
+                            historyEl.scrollTop = historyEl.scrollHeight;
+                            idx++;
+                            terminalHistoryTimer = setTimeout(typeChar, 17);
+                        } else {
+                            if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor);
+                            if (cb) cb();
+                        }
+                    }
+                    typeChar();
+                }
+
+                function nextStep() {
+                    if (i >= steps.length) return;
+                    const s = steps[i];
                     let row = document.createElement('div');
                     row.className = 'term-row';
                     if (s.type === 'cmd') {
-                        row.innerHTML = s.prompt + ' <span class="term-cmd">' + s.cmd + '</span>';
+                        historyEl.appendChild(row);
+                        typeCommand(row, s.prompt, s.cmd, s.ariaLabel, function () {
+                            i++;
+                            terminalHistoryTimer = setTimeout(nextStep, 120);
+                        });
                     } else {
                         row.innerHTML = `<div class="term-output" role="list">${s.output}</div>`;
-                    }
-                    historyEl.appendChild(row);
-                });
-                historyEl.scrollTop = historyEl.scrollHeight;
-                return;
-            }
-            let i = 0;
-            function typeCommand(row, prompt, cmd, ariaLabel, cb) {
-                row.innerHTML = prompt + ' <span class="term-cmd" aria-label="' + ariaLabel + '"></span><span class="terminal-cursor" aria-hidden="true">▋</span>';
-                const cmdSpan = row.querySelector('.term-cmd');
-                const cursor = row.querySelector('.terminal-cursor');
-                let idx = 0;
-                function typeChar() {
-                    if (idx <= cmd.length) {
-                        cmdSpan.textContent = cmd.slice(0, idx);
-                        cursor.style.display = 'inline-block';
+                        historyEl.appendChild(row);
                         historyEl.scrollTop = historyEl.scrollHeight;
-                        idx++;
-                        terminalHistoryTimer = setTimeout(typeChar, 17);
-                    } else {
-                        if (cursor && cursor.parentNode) cursor.parentNode.removeChild(cursor);
-                        if (cb) cb();
+                        i++;
+                        terminalHistoryTimer = setTimeout(nextStep, 420);
                     }
                 }
-                typeChar();
-            }
-
-            function nextStep() {
-                if (i >= steps.length) return;
-                const s = steps[i];
-                let row = document.createElement('div');
-                row.className = 'term-row';
-                if (s.type === 'cmd') {
-                    historyEl.appendChild(row);
-                    typeCommand(row, s.prompt, s.cmd, s.ariaLabel, function () {
-                        i++;
-                        terminalHistoryTimer = setTimeout(nextStep, 120);
-                    });
-                } else {
-                    row.innerHTML = `<div class="term-output" role="list">${s.output}</div>`;
-                    historyEl.appendChild(row);
-                    historyEl.scrollTop = historyEl.scrollHeight;
-                    i++;
-                    terminalHistoryTimer = setTimeout(nextStep, 420);
-                }
-            }
-            nextStep();
+                nextStep();
             } catch (e) {
                 historyEl.innerHTML = '<div style="color:red">内容渲染失败: ' + e.message + '</div>';
             }
@@ -1034,10 +1221,8 @@
             clockEl.textContent = `${hours}:${minutes} ${weekday}`;
         }
 
-        // 初始化时钟并设置定时器
+        // 当前语言变量
         let currentLang = 'zh';
-        updateClock(currentLang);
-        setInterval(() => updateClock(currentLang), 60000); // 每分钟更新一次
 
         // 修改导航提示的翻译
         const navHints = {
@@ -1067,7 +1252,7 @@
             const hintEl = document.getElementById('nav-hint');
             hintEl.textContent = navHints[lang].hint;
             hintEl.classList.add('visible');
-            
+
             // 5秒后隐藏提示
             setTimeout(() => {
                 hintEl.classList.remove('visible');
@@ -1107,7 +1292,7 @@
             const baseLang = browserLang.split('-')[0];
 
             // 检查localStorage非法语言代码
-            if (savedLang && !['zh','en','ja'].includes(savedLang)) {
+            if (savedLang && !['zh', 'en', 'ja'].includes(savedLang)) {
                 localStorage.removeItem('preferredLanguage');
                 savedLang = null;
             }
@@ -1125,6 +1310,9 @@
             }
 
             currentLang = initialLang;
+            // 修复初次访问时星期没有跟随初始语言显示
+            updateClock(currentLang);
+            setInterval(() => updateClock(currentLang), 60000); // 每分钟更新一次
 
             // 确保在渲染内容之前所有必要的元素都已存在
             const titleEl = document.getElementById('title');
@@ -1137,7 +1325,7 @@
                     updateNavHint(initialLang);
                     initializeKeyboardNavigation();
                     // fallback: 如果1s后内容还没出来，直接输出全部内容
-                    setTimeout(function() {
+                    setTimeout(function () {
                         if (!historyEl.innerHTML || historyEl.innerHTML.trim() === '') {
                             renderTerminalHistory(initialLang, true);
                         }
@@ -1153,13 +1341,13 @@
         function initializeKeyboardNavigation() {
             let currentFocusIndex = -1;
             const focusableElements = document.querySelectorAll('a, button');
-            
+
             // 添加键盘事件监听
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 // 显示导航提示
                 const hintEl = document.getElementById('nav-hint');
                 hintEl.classList.add('visible');
-                
+
                 // 重置隐藏计时器
                 clearTimeout(hintEl.hideTimer);
                 hintEl.hideTimer = setTimeout(() => {
@@ -1186,7 +1374,7 @@
                 if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                     e.preventDefault();
                     const links = document.querySelectorAll('.term-output a');
-                    
+
                     if (links.length === 0) return;
 
                     if (currentFocusIndex === -1) {
