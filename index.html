@@ -75,7 +75,7 @@
                 0 8px 16px rgba(0, 0, 0, 0.02),
                 0 16px 32px rgba(0, 0, 0, 0.02),
                 0 0 0 1px rgba(0, 0, 0, 0.05);
-            max-width: 1250px;
+            max-width: 1120px;
             width: 95vw;
             margin: 20px auto;
             overflow: hidden;
@@ -282,9 +282,11 @@
             border-radius: 4px;
         }
         .term-row:focus-within, .term-row:focus {
-            background: rgba(77, 171, 255, 0.08);
-            outline: 1.5px solid #4dabff;
-        }
+    background: #eaf6ff;
+    outline: 1.5px solid #4dabff;
+    box-shadow: none;
+}
+
         @media (max-width: 600px) {
             .term-row {
                 margin-bottom: 4px;
@@ -317,29 +319,40 @@
         }
 
         .term-output a {
-            color: #0056b3;
-            text-decoration: underline;
-            margin-right: 18px;
-            font-size: 15px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            padding: 2px 4px;
-            border-radius: 4px;
-            display: inline-block;
-        }
+    color: #0056b3;
+    text-decoration: none;
+    margin-right: 18px;
+    font-size: 15px;
+    position: relative;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    background: none;
+    outline: none;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
 
-        .term-output a::before {
-            content: attr(data-index);
-            position: absolute;
-            left: -20px;
-            color: #666;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
+.term-output a:hover,
+.term-output a:focus {
+    background: #eaf6ff;
+    color: #23272e;
+    text-decoration: none;
+    box-shadow: 0 0 0 1.5px #4dabff;
+    outline: none;
+}
 
-        .term-output a:hover::before,
-        .term-output a:focus::before {
+.term-output a::before {
+    content: attr(data-index);
+    position: absolute;
+    left: -20px;
+    color: #666;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.term-output a:hover::before,
+.term-output a:focus::before {
             opacity: 1;
         }
 
@@ -435,6 +448,16 @@
             .term-output a::before {
                 color: #bdbdbd;
             }
+            .term-output a:hover,
+            .term-output a:focus {
+                background: #253040;
+                color: #e3e5e8;
+                box-shadow: 0 0 0 1.5px #4dabff;
+            }
+            .term-row:focus-within, .term-row:focus {
+                background: #253040;
+                outline: 1.5px solid #4dabff;
+            }
 
             .term-cmd {
                 color: #e3e5e8;
@@ -516,6 +539,16 @@
             .term-output a::before {
                 left: -16px;
                 font-size: 11px;
+            }
+            .term-output a:hover,
+            .term-output a:focus {
+                background: #eaf6ff;
+                color: #23272e;
+                box-shadow: 0 0 0 1.5px #4dabff;
+            }
+            .term-row:focus-within, .term-row:focus {
+                background: #eaf6ff;
+                outline: 1.5px solid #4dabff;
             }
             .nav-hint {
                 font-size: 12px;
@@ -834,7 +867,7 @@
                 blogHeading: "博客"
             },
             en: {
-                title: "yuuniji's Portfolio",
+                title: "Zewai Ye's Portfolio",
                 projectsHeading: "Projects",
                 blogHeading: "Blog"
             },
@@ -884,7 +917,19 @@
             const promptBlog = `<span class="term-prompt" aria-hidden="true">➜ ${dirs.blog} %</span>`;
 
             // 历史步骤
-            const steps = [
+            // 仅用人名作为版权声明内容
+        const nameText = {
+            zh: '叶泽伟',
+            en: 'Zewai Ye',
+            ja: '葉澤偉'
+        };
+        const copyrightText = {
+            zh: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.zh}</a> 版权所有`,
+            en: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.en}</a>. All rights reserved.`,
+            ja: `© 2025 <a href="https://github.com/yuuniji" target="_blank" style="color:#888;text-decoration:none;">${nameText.ja}</a> 全著作権所有`
+        };
+
+        const steps = [
                 { type: 'cmd', prompt, cmd: 'ls', ariaLabel: 'List directories' },
                 { type: 'output', output: `<a href="https://github.com/yuuniji" target="_blank" aria-label="${dirs.project} homepage" data-index="1">${dirs.project}</a>  <a href="https://yuuniji.github.io/" target="_blank" aria-label="${dirs.blog} homepage" data-index="2">${dirs.blog}</a>` },
                 { type: 'cmd', prompt: promptProjects, cmd: `cd ~/${dirs.project} && ls`, ariaLabel: `Change to ${dirs.project} directory and list contents` },
@@ -902,7 +947,9 @@
                             acc += `<div class=\"link-item\"><a href=\"${blog.url}\" target=\"_blank\" aria-label=\"${blog.label[lang]}\" data-index=\"${idx + 1}\">${blog.label[lang]}</a></div>`;
                             if (idx % 2 === 1 || idx === arr.length - 1) acc += '</div>';
                             return acc;
-                        }, '') + `</div>` }
+                        }, '') + `</div>` },
+                // 版权声明（多语言）
+                { type: 'output', output: `<span style=\"color:#888;opacity:0.55;font-size:13px;\">${copyrightText[lang]}</span>` }
             ];
 
             if (fallbackMode) {
