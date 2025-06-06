@@ -557,6 +557,13 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+    // 全局JS错误捕获，方便调试
+    window.onerror = function(msg, url, line, col, error) {
+        alert('JS错误: ' + msg + '\n' + url + ':' + line + (col ? (':' + col) : ''));
+        return false;
+    }
+    </script>
+    <script>
         // 初始化粒子动画
         particlesJS('particles-js', {
             particles: {
@@ -797,13 +804,16 @@
         // 仿终端命令历史逻辑
         // 全局变量用于终止动画
         let terminalHistoryTimer = null;
-        function renderTerminalHistory(lang) {
+        // fallbackMode: true时直接输出全部内容，无动画
+        function renderTerminalHistory(lang, fallbackMode) {
             const historyEl = document.getElementById('terminal-history');
             historyEl.innerHTML = '';
             if (terminalHistoryTimer) {
                 clearTimeout(terminalHistoryTimer);
                 terminalHistoryTimer = null;
             }
+            // fallback: 若异常直接全部输出
+            try {
             const dirNames = {
                 zh: { project: '项目', blog: '博客' },
                 en: { project: 'Projects', blog: 'Blog' },
@@ -824,6 +834,21 @@
                 { type: 'output', output: data.blog.map((blog, index) => `<a href="${blog.url}" target="_blank" aria-label="${blog.label[lang]}" data-index="${index + 1}">${blog.label[lang]}</a>`).join('<br>') }
             ];
 
+            if (fallbackMode) {
+                // 直接输出所有内容，无动画
+                steps.forEach(s => {
+                    let row = document.createElement('div');
+                    row.className = 'term-row';
+                    if (s.type === 'cmd') {
+                        row.innerHTML = s.prompt + ' <span class="term-cmd">' + s.cmd + '</span>';
+                    } else {
+                        row.innerHTML = `<div class="term-output" role="list">${s.output}</div>`;
+                    }
+                    historyEl.appendChild(row);
+                });
+                historyEl.scrollTop = historyEl.scrollHeight;
+                return;
+            }
             let i = 0;
             function typeCommand(row, prompt, cmd, ariaLabel, cb) {
                 row.innerHTML = prompt + ' <span class="term-cmd" aria-label="' + ariaLabel + '"></span><span class="terminal-cursor" aria-hidden="true">▋</span>';
@@ -865,6 +890,9 @@
                 }
             }
             nextStep();
+            } catch (e) {
+                historyEl.innerHTML = '<div style="color:red">内容渲染失败: ' + e.message + '</div>';
+            }
         }
 
         // 星期翻译
@@ -938,8 +966,8 @@
             // 获取浏览器语言
             const browserLang = navigator.language || navigator.userLanguage;
             // 从 localStorage 获取保存的语言设置
-            const savedLang = localStorage.getItem('preferredLanguage');
-            
+            let savedLang = localStorage.getItem('preferredLanguage');
+
             // 语言映射表（将浏览器语言代码映射到我们的支持的语言）
             const langMap = {
                 'zh': 'zh',
@@ -952,42 +980,50 @@
                 'ja': 'ja',
                 'ja-JP': 'ja'
             };
-            
+
             // 获取浏览器语言的基础代码（例如 'zh-CN' -> 'zh'）
             const baseLang = browserLang.split('-')[0];
-            
+
+            // 检查localStorage非法语言代码
+            if (savedLang && !['zh','en','ja'].includes(savedLang)) {
+                localStorage.removeItem('preferredLanguage');
+                savedLang = null;
+            }
+
             // 确定初始语言
             let initialLang;
             if (savedLang) {
-                // 如果有保存的语言设置，使用保存的设置
                 initialLang = savedLang;
             } else if (langMap[browserLang]) {
-                // 如果浏览器语言完全匹配，使用该语言
                 initialLang = langMap[browserLang];
             } else if (langMap[baseLang]) {
-                // 如果浏览器语言的基础代码匹配，使用该语言
                 initialLang = langMap[baseLang];
             } else {
-                // 默认使用中文
                 initialLang = 'zh';
             }
-            
-            // 设置初始语言
+
             currentLang = initialLang;
-            
+
             // 确保在渲染内容之前所有必要的元素都已存在
             const titleEl = document.getElementById('title');
             const historyEl = document.getElementById('terminal-history');
             const clockEl = document.getElementById('clock');
-            
+
             if (titleEl && historyEl && clockEl) {
-                renderContent(initialLang);
-                updateNavHint(initialLang);
-                
-                // 初始化键盘导航
-                initializeKeyboardNavigation();
+                try {
+                    renderContent(initialLang);
+                    updateNavHint(initialLang);
+                    initializeKeyboardNavigation();
+                    // fallback: 如果1s后内容还没出来，直接输出全部内容
+                    setTimeout(function() {
+                        if (!historyEl.innerHTML || historyEl.innerHTML.trim() === '') {
+                            renderTerminalHistory(initialLang, true);
+                        }
+                    }, 1200);
+                } catch (e) {
+                    historyEl.innerHTML = '<div style="color:red">内容渲染失败: ' + e.message + '</div>';
+                }
             } else {
-                // 如果元素不存在，等待一小段时间后重试
                 setTimeout(initializeContent, 100);
             }
         }
